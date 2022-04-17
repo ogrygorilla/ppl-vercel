@@ -34,7 +34,7 @@ function SignInButton() {
 
   return (
     <button className="btn-google" onClick={signInWithGithub}>
-      <img src={"/google.png"} width="30px" /> Sign in with Google
+      <img src={"/google.png"} width="30px" /> Sign in with Github
     </button>
   );
 }
