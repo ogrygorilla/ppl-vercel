@@ -1,10 +1,12 @@
+import debounce from "lodash.debounce";
+import { useCallback, useEffect, useState } from "react";
+
+import { firestore, fromMillis, postToJSON } from "../lib/firebase";
 import PostFeed from "../components/PostFeed";
 import Loader from "../components/Loader";
-import { firestore, fromMillis, postToJSON } from "../lib/firebase";
-
-import { useState } from "react";
 import Layout from "../components/Layout";
 import Hero from "../components/Hero";
+import { Router, useRouter } from "next/router";
 
 // Max post to query per page
 const LIMIT = 4;
@@ -27,11 +29,12 @@ export default function Home(props) {
   const [posts, setPosts] = useState(props.posts);
   const [loading, setLoading] = useState(false);
 
-  const [creator, setCreator] = useState("");
   const [postsEnd, setPostsEnd] = useState(false);
 
-  // Validate length
-  const isValid = creator.length > 3 && creator.length < 30;
+  const [creator, setCreator] = useState("");
+  const [isValid, setIsValid] = useState(false);
+  const router = useRouter();
+  // Search Creator
 
   const getMorePosts = async () => {
     setLoading(true);
@@ -59,19 +62,52 @@ export default function Home(props) {
     }
   };
 
+  // Hit the database for username match after each debounced change
+  // useCallback is required for debounce to work
+  // const checkUsername = useCallback(
+  //   debounce(async (creator) => {
+  //     if (creator.length >= 3) {
+  //       const ref = firestore.doc(`usernames/${creator}`);
+  //       const { exists } = await ref.get();
+  //       console.log("Firestore read executed!");
+  //       setIsValid(exists);
+  //       setLoading(false);
+  //     }
+  //   }, 700),
+  //   []
+  // );
+
+  const preventDefault = (f) => (e) => {
+    e.preventDefault();
+    f(e);
+  };
+
+  const handleSubmit = preventDefault(() => {
+    // checkUsername(creator);
+    const path = "/" + creator;
+    // if (isValid) {
+    router.push({
+      pathname: path,
+      //query: { q: query },
+    });
+    // }
+    //
+  });
+
   return (
     <Layout title={"Home"}>
       <Hero
         title={"Search your Content Creator"}
         starter={false}
         child={
-          <form onSubmit={() => {}}>
+          <form onSubmit={handleSubmit}>
             <input
               value={creator}
-              onChange={(e) => setCreator(e.target.value)}
+              onChange={(e) => setCreator(e.target.value.toLowerCase())}
               placeholder="Search Creator"
               className="mt-2"
             />
+            <input type="submit" hidden />
           </form>
         }
       />

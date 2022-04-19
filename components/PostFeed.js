@@ -5,10 +5,15 @@ import PromiseCard from "./PromiseCard";
 
 export default function PostFeed({ posts, admin }) {
   return (
-    <div className="grid lg:grid-cols-3 sm:grid-cols-2">
+    <div className="grid lg:grid-cols-3 sm:grid-cols-2 justify-center">
       {posts
         ? posts.map((post) => (
-            <PostItem post={post} key={post.slug} admin={admin} />
+            <PostItem
+              post={post}
+              key={post.slug}
+              admin={admin}
+              className="justify-center w-full"
+            />
           ))
         : null}
     </div>
@@ -16,8 +21,12 @@ export default function PostFeed({ posts, admin }) {
 }
 
 function PostItem({ post, admin = false }) {
+  return <PromiseCard promiseVal={post} />;
+}
+
+function PostItemAlt({ post, admin = false }) {
   return (
-    <PromiseCard promiseVal={post} />
+    <></>
     // <card
     //   // id={el.id}
     //   className="min-h-64 m-4 flex flex-col overflow-hidden rounded-lg bg-blue-50 hover:cursor-pointer hover:shadow-lg"
@@ -43,7 +52,6 @@ function PostItem({ post, admin = false }) {
     // </card>
   );
 }
-
 // function PostItem({ post, admin = false }) {
 //   // Naive method to calc word count and read time
 //   const wordCount = post?.content.trim().split(/\s+/g).length;
