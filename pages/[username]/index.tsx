@@ -40,7 +40,7 @@ export async function getServerSideProps({ query }) {
 export default function UserProfilePage({ user, posts }) {
   return (
     <Layout title={"Profile"}>
-      <Hero title={"Profile"} starter={false} />
+      <Hero title={"Profile"} starter={false} child={undefined} />
       <UserProfile user={user} />
       <main>
         <div className="mt-16 mb-8 text-center">

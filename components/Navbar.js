@@ -9,20 +9,22 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <ul>
-        <li>
-          <Link href="/">
-            <button className="btn-logo">FEED</button>
+        <div class="mr-6 mb-2 flex flex-shrink-0 items-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-2xl font-bold text-transparent sm:text-5xl">
+          <Link href={"/"}>
+            <span class="text-xl font-semibold tracking-tight">Populend</span>
           </Link>
-        </li>
+        </div>
 
         {/* user is signed-in and has username */}
         {username && (
           <>
-            <li className="push-left">
-              <Link href="/admin">
-                <button className="btn-blue">Write Posts</button>
+            <div class=" push-left mr-6 mb-2 flex flex-shrink-0 items-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-2xl font-bold text-transparent sm:text-5xl">
+              <Link href={"/"}>
+                <span class="text-xl font-semibold tracking-tight">
+                  Create Promise
+                </span>
               </Link>
-            </li>
+            </div>
             <li>
               <Link href={`/${username}`}>
                 <img src={user?.photoURL} />

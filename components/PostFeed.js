@@ -1,6 +1,7 @@
 import Link from "next/link";
 import PromiseList from "../components/PromiseList";
 import styles from "./PostFeed.module.css";
+import PromiseCard from "./PromiseCard";
 
 export default function PostFeed({ posts, admin }) {
   return (
@@ -16,29 +17,30 @@ export default function PostFeed({ posts, admin }) {
 
 function PostItem({ post, admin = false }) {
   return (
-    <card
-      // id={el.id}
-      className="min-h-64 m-4 flex flex-col overflow-hidden rounded-lg bg-blue-50 hover:cursor-pointer hover:shadow-lg"
-      // onMouseOver={() => onMouseEv(i, true)}
-      // onMouseLeave={() => onMouseEv(i, false)}
-    >
-      {/* <a href="#">
-                    <img alt="Placeholder" class="block h-auto w-full" src="https://picsum.photos/600/400/?random">
-                </a> */}
+    <PromiseCard promiseVal={post} />
+    // <card
+    //   // id={el.id}
+    //   className="min-h-64 m-4 flex flex-col overflow-hidden rounded-lg bg-blue-50 hover:cursor-pointer hover:shadow-lg"
+    //   // onMouseOver={() => onMouseEv(i, true)}
+    //   // onMouseLeave={() => onMouseEv(i, false)}
+    // >
+    //   {/* <a href="#">
+    //                 <img alt="Placeholder" class="block h-auto w-full" src="https://picsum.photos/600/400/?random">
+    //             </a> */}
 
-      <h1 className="whitespace-nowrap overflow-hidden text-ellipsis p-5 mb-4">
-        {post.title}
-      </h1>
-      <p className="h-full"></p>
-      <p className="mt-12 mb-2 text-sm text-center">{post.username}</p>
-      <div className="flex h-64 justify-center bg-blue-100">
-        <Link href={`/${post.username}/${post.slug}`}>
-          <button className="m-auto rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl py-3 px-8">
-            20 €
-          </button>
-        </Link>
-      </div>
-    </card>
+    //   <h1 className="whitespace-nowrap overflow-hidden text-ellipsis p-5 mb-4">
+    //     {post.title}
+    //   </h1>
+    //   <p className="h-full"></p>
+    //   <p className="mt-12 mb-2 text-sm text-center">{post.username}</p>
+    //   <div className="flex h-64 justify-center bg-blue-100">
+    //     <Link href={`/${post.username}/${post.slug}`}>
+    //       <button className="m-auto rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl py-3 px-8">
+    //         20 €
+    //       </button>
+    //     </Link>
+    //   </div>
+    // </card>
   );
 }
 

@@ -8,12 +8,6 @@ export default function UserProfile({ user }) {
         <Image priority src={user.photoURL} height={100} width={100} />
       </div>
     </div>
-    // <div className="box-center">
-    //   <img src={user.photoURL || "/hacker.png"} className="card-img-center" />
-    //   <p>
-    //     <i>@{user.username}</i>
-    //   </p>
-    //   <h1>{user.displayName || "Anonymous User"}</h1>
-    // </div>
+    //
   );
 }

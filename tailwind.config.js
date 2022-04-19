@@ -5,6 +5,7 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    color: { tahiti: "#3ab7bf" },
   },
   plugins: [],
 };

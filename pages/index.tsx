@@ -4,6 +4,7 @@ import { firestore, fromMillis, postToJSON } from "../lib/firebase";
 
 import { useState } from "react";
 import Layout from "../components/Layout";
+import Hero from "../components/Hero";
 
 // Max post to query per page
 const LIMIT = 4;
@@ -26,7 +27,11 @@ export default function Home(props) {
   const [posts, setPosts] = useState(props.posts);
   const [loading, setLoading] = useState(false);
 
+  const [creator, setCreator] = useState("");
   const [postsEnd, setPostsEnd] = useState(false);
+
+  // Validate length
+  const isValid = creator.length > 3 && creator.length < 30;
 
   const getMorePosts = async () => {
     setLoading(true);
@@ -56,7 +61,24 @@ export default function Home(props) {
 
   return (
     <Layout title={"Home"}>
+      <Hero
+        title={"Search your Content Creator"}
+        starter={false}
+        child={
+          <form onSubmit={() => {}}>
+            <input
+              value={creator}
+              onChange={(e) => setCreator(e.target.value)}
+              placeholder="Search Creator"
+              className="mt-2"
+            />
+          </form>
+        }
+      />
       <main>
+        <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
+          Top Promises
+        </h1>
         <PostFeed posts={posts} admin={undefined} />
 
         {!loading && !postsEnd && (

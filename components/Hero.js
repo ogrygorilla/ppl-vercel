@@ -1,17 +1,18 @@
 import React from "react";
 import Link from "next/link";
 
-export default function Hero({ title, starter }) {
+export default function Hero({ title, starter, child }) {
   return (
-    <div className="h-64 bg-yellow-400">
-      <section
+    <div className="h-64 bg-blue-100">
+      <main
         className="flex h-full flex-col bg-blue-100 text-center"
         // style="background-image: url('https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=702&q=80'); background-size: cover"
       >
-        {/* <h1 className="mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
-          Welcome to {title}-Page!
+        <h1 className="mb-2 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
+          {title}
         </h1>
-
+        {child}
+        {/* 
         <p className="text-1xl mb-8 text-gray-700 sm:text-lg">
           This is a demo!
         </p> */}
@@ -26,7 +27,7 @@ export default function Hero({ title, starter }) {
         ) : (
           <></>
         )}
-      </section>
+      </main>
     </div>
   );
 }
