@@ -310,39 +310,13 @@ body {
 
 /* Card */
 
-
-
-
-@keyframes blur {
-  from {
-    -webkit-transform: scale(1, 1);
-    transform: scale(1, 1);
-  }
-  to {
-    -webkit-transform: scale(1.5, 1.5);
-    transform: scale(2, 2);
-  }
-}
-
-.wrapper {
-  display: grid;
-  grid-template-columns: repeat( auto-fit, 1fr );
-  grid-template-rows: auto;
-  grid-template-areas:
-    "menu menu menu"
-    ". card .";
-  width: 100vw;
-  min-height: 100vh;
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-
 .card {
   /* position: relative; */
   overflow: hidden;
   width: 100%;
   max-width: 250px;
   height: 400px;
+  background-color: #DBEAFE;
   font-size: var(--fontOrigin);
   border-radius: 8px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);

@@ -9,7 +9,7 @@ import Hero from "../components/Hero";
 import { Router, useRouter } from "next/router";
 
 // Max post to query per page
-const LIMIT = 4;
+const LIMIT = 3;
 
 export async function getServerSideProps(context) {
   const postsQuery = firestore
@@ -31,7 +31,7 @@ export default function Home(props) {
 
   const [postsEnd, setPostsEnd] = useState(false);
 
-  const [creator, setCreator] = useState("");
+  const [creator, setCreator] = useState("marius");
   const [isValid, setIsValid] = useState(false);
   const router = useRouter();
   // Search Creator
