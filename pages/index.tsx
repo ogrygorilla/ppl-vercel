@@ -3,9 +3,10 @@ import Loader from "../components/Loader";
 import { firestore, fromMillis, postToJSON } from "../lib/firebase";
 
 import { useState } from "react";
+import Layout from "../components/Layout";
 
 // Max post to query per page
-const LIMIT = 1;
+const LIMIT = 4;
 
 export async function getServerSideProps(context) {
   const postsQuery = firestore
@@ -54,16 +55,18 @@ export default function Home(props) {
   };
 
   return (
-    <main>
-      <PostFeed posts={posts} admin={undefined} />
+    <Layout title={"Home"}>
+      <main>
+        <PostFeed posts={posts} admin={undefined} />
 
-      {!loading && !postsEnd && (
-        <button onClick={getMorePosts}>Load more</button>
-      )}
+        {!loading && !postsEnd && (
+          <button onClick={getMorePosts}>Load more</button>
+        )}
 
-      <Loader show={loading} />
+        <Loader show={loading} />
 
-      {postsEnd && "You have reached the end!"}
-    </main>
+        {postsEnd && "You have reached the end!"}
+      </main>
+    </Layout>
   );
 }

@@ -1,6 +1,8 @@
 import { getUserWithUsername, postToJSON } from "../../lib/firebase";
 import PostFeed from "../../components/PostFeed";
 import UserProfile from "../../components/UserProfile";
+import Layout from "../../components/Layout";
+import Hero from "../../components/Hero";
 
 //Server side rendering
 //Zu jeder Zeit wenn diese Seite angefragt wird, wird eine Anfrage an den Server geschickt
@@ -37,9 +39,22 @@ export async function getServerSideProps({ query }) {
 
 export default function UserProfilePage({ user, posts }) {
   return (
-    <main>
+    <Layout title={"Profile"}>
+      <Hero title={"Profile"} starter={false} />
       <UserProfile user={user} />
-      <PostFeed posts={posts} admin={undefined} />
-    </main>
+      <main>
+        <div className="mt-16 mb-8 text-center">
+          <p>
+            <i>@{user.username}</i>
+          </p>
+          <h1>{user.displayName || "Anonymous User"}</h1>
+        </div>
+        <hr />
+        <h1 className="m-8 text-2xl sm:text-4xl text-center">
+          Wähle einen Gutschein aus
+        </h1>
+        <PostFeed posts={posts} admin={undefined} />
+      </main>
+    </Layout>
   );
 }

@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --color-bg: #eef0f1;
@@ -15,13 +18,15 @@ body {
   font-family: 'Noto Sans', sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
-  margin-top: 50px;
+  margin-top: 34px;
 }
-
-
 
 main {
   padding: 1rem 10vw;
+}
+
+.profileMain{
+  padding: 0;
 }
 
 h1 { font-size: 2rem; }
@@ -174,6 +179,7 @@ button.btn-logo {
   background-color: white;
   border: 1px solid var(--color-gray);
   border-radius: 8px;
+  min-height: 300px;
 }
 
 .card footer {

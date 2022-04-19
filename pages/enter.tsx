@@ -3,6 +3,7 @@ import { UserContext } from "../lib/context";
 
 import { useEffect, useState, useCallback, useContext } from "react";
 import debounce from "lodash.debounce";
+import Layout from "../components/Layout";
 
 export default function Enter(props) {
   const { user, username } = useContext(UserContext);
@@ -11,18 +12,20 @@ export default function Enter(props) {
   // 2. user signed in, but missing username <UsernameForm />
   // 3. user signed in, has username <SignOutButton />
   return (
-    <main>
-      {/* <Metatags title="Enter" description="Sign up for this amazing app!" /> */}
-      {user ? (
-        !username ? (
-          <UsernameForm />
+    <Layout title={"Enter"}>
+      <main>
+        {/* <Metatags title="Enter" description="Sign up for this amazing app!" /> */}
+        {user ? (
+          !username ? (
+            <UsernameForm />
+          ) : (
+            <SignOutButton />
+          )
         ) : (
-          <SignOutButton />
-        )
-      ) : (
-        <SignInButton />
-      )}
-    </main>
+          <SignInButton />
+        )}
+      </main>
+    </Layout>
   );
 }
 

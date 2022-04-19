@@ -11,14 +11,19 @@ import kebabCase from "lodash.kebabcase";
 import toast from "react-hot-toast";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 
+import styles from "@styles/Admin.module.css";
+import Layout from "../../components/Layout";
+
 export default function AdminPostsPage(props) {
   return (
-    <main>
-      <AuthCheck>
-        {/* <PostList /> */}
-        <CreateNewPost />
-      </AuthCheck>
-    </main>
+    <Layout title={"Admin"}>
+      <main>
+        <AuthCheck>
+          {/* <PostList /> */}
+          <CreateNewPost />
+        </AuthCheck>
+      </main>
+    </Layout>
   );
 }
 
