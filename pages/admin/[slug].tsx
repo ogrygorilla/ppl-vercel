@@ -8,44 +8,44 @@ import AuthCheck from "../../components/AuthCheck";
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router";
 
-export default function AdminPostEdit(props) {
+export default function AdminPromiseEdit(props) {
   return (
     <AuthCheck>
       <Layout title={undefined}>
-        <PostManager />
+        <PromiseManager />
       </Layout>
     </AuthCheck>
   );
 }
 
-function PostManager() {
+function PromiseManager() {
   const router = useRouter();
   const { slug } = router.query;
 
-  const postRef = firestore
+  const promiseRef = firestore
     .collection("users")
     .doc(auth.currentUser.uid)
-    .collection("posts")
+    .collection("promises")
     .doc(slug.toString());
 
-  const [posts, loading, error] = useCollectionDataOnce(
-    collection(firestore, "users", auth.currentUser.uid, "posts")
+  const [promises, loading, error] = useCollectionDataOnce(
+    collection(firestore, "users", auth.currentUser.uid, "promises")
   );
 
-  const post = posts ? posts.filter((el) => el.slug === slug) : null;
+  const promise = promises ? promises.filter((el) => el.slug === slug) : null;
 
-  console.log(post);
+  console.log(promise);
   return (
     <main className="container">
-      {post && (
+      {promise && (
         <>
           <section>
-            <h1>{post[0].title}</h1>
-            <p>ID: {post[0].slug}</p>
+            <h1>{promise[0].title}</h1>
+            <p>ID: {promise[0].slug}</p>
 
-            <PostForm
-              postRef={postRef}
-              defaultValues={post[0]}
+            <PromiseForm
+              promiseRef={promiseRef}
+              defaultValues={promise[0]}
               // preview={undefined} // preview={preview}
             />
           </section>
@@ -65,7 +65,7 @@ function PostManager() {
   );
 }
 
-function PostForm({ defaultValues, postRef }) {
+function PromiseForm({ defaultValues, promiseRef }) {
   const router = useRouter();
   //Register user input into the hook
   const { register, handleSubmit, reset, watch } = useForm({
@@ -73,8 +73,8 @@ function PostForm({ defaultValues, postRef }) {
     mode: "onChange",
   });
 
-  const updatePost = async ({ content, published }) => {
-    await postRef.update({
+  const updatePromise = async ({ content, published }) => {
+    await promiseRef.update({
       content,
       published,
       updatedAt: serverTimestamp(),
@@ -82,11 +82,11 @@ function PostForm({ defaultValues, postRef }) {
 
     reset({ content, published });
 
-    toast.success("Post updated successfully!");
+    toast.success("Promise updated successfully!");
   };
 
-  const deletePost = async () => {
-    await postRef.delete();
+  const deletePromise = async () => {
+    await promiseRef.delete();
 
     toast.success("Promise deleted!");
 
@@ -94,19 +94,9 @@ function PostForm({ defaultValues, postRef }) {
     router.push(`/`);
   };
 
-  const onSubmit = (data) => alert(JSON.stringify(data));
-
-  const handleSubmitDraft = (e) => {
-    e.preventDefault();
-    handleSubmit(deletePost);
-  };
-  // const handleSubmitPreview=()=>{
-  //   handleSubmit((data)=>{...})()
-  // }
-
   return (
     <>
-      <form onSubmit={handleSubmit(updatePost)}>
+      <form onSubmit={handleSubmit(updatePromise)}>
         <div>
           {/* <textarea name="content" ref={register}></textarea> */}
           <input
@@ -132,7 +122,7 @@ function PostForm({ defaultValues, postRef }) {
           </button>
         </div>
       </form>
-      <form onSubmit={handleSubmit(deletePost)}>
+      <form onSubmit={handleSubmit(deletePromise)}>
         <button
           type="submit"
           className="rounded-lg bg-red-400 p-4 py-2 text-white transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8 mt-2"

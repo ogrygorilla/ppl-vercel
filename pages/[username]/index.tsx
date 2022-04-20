@@ -1,8 +1,8 @@
-import { getUserWithUsername, postToJSON } from "../../lib/firebase";
-import PostFeed from "../../components/PostFeed";
+import { getUserWithUsername, promiseToJSON } from "../../lib/firebase";
 import UserProfile from "../../components/UserProfile";
 import Layout from "../../components/Layout";
 import Hero from "../../components/Hero";
+import PromiseFeed from "../../components/PromiseFeed";
 
 //Server side rendering
 //Zu jeder Zeit wenn diese Seite angefragt wird, wird eine Anfrage an den Server geschickt
@@ -20,24 +20,24 @@ export async function getServerSideProps({ query }) {
 
   // JSON serializable data
   let user = null;
-  let posts = null;
+  let promises = null;
 
   if (userDoc) {
     user = userDoc.data();
-    const postsQuery = userDoc.ref
-      .collection("posts")
+    const promisesQuery = userDoc.ref
+      .collection("promises")
       .where("published", "==", true)
       .orderBy("createdAt", "desc")
       .limit(5);
-    posts = (await postsQuery.get()).docs.map(postToJSON);
+    promises = (await promisesQuery.get()).docs.map(promiseToJSON);
   }
 
   return {
-    props: { user, posts }, // will be passed to the page component as props
+    props: { user, promises }, // will be passed to the page component as props
   };
 }
 
-export default function UserProfilePage({ user, posts }) {
+export default function UserProfilePage({ user, promises }) {
   return (
     <Layout title={"Profile"}>
       <Hero title={"Profile"} starter={false} child={undefined} />
@@ -53,7 +53,7 @@ export default function UserProfilePage({ user, posts }) {
         <h1 className="m-8 text-2xl sm:text-4xl text-center">
           Wähle einen Gutschein aus
         </h1>
-        <PostFeed posts={posts} admin={undefined} />
+        <PromiseFeed promises={promises} admin={undefined} />
       </main>
     </Layout>
   );

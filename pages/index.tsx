@@ -1,44 +1,44 @@
 import debounce from "lodash.debounce";
 import { useCallback, useEffect, useState } from "react";
 
-import { firestore, fromMillis, postToJSON } from "../lib/firebase";
-import PostFeed from "../components/PostFeed";
+import { firestore, fromMillis, promiseToJSON } from "../lib/firebase";
 import Loader from "../components/Loader";
 import Layout from "../components/Layout";
 import Hero from "../components/Hero";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
+import PromiseFeed from "../components/PromiseFeed";
 
-// Max post to query per page
+// Max promise to query per page
 const LIMIT = 3;
 
 export async function getServerSideProps(context) {
-  const postsQuery = firestore
-    .collectionGroup("posts")
+  const promiseQuery = firestore
+    .collectionGroup("promises")
     .where("published", "==", true)
     .orderBy("createdAt", "desc")
     .limit(LIMIT);
 
-  const posts = (await postsQuery.get()).docs.map(postToJSON);
+  const promises = (await promiseQuery.get()).docs.map(promiseToJSON);
 
   return {
-    props: { posts }, // will be passed to the page component as props
+    props: { promises }, // will be passed to the page component as props
   };
 }
 
 export default function Home(props) {
-  const [posts, setPosts] = useState(props.posts);
+  const [promises, setPromises] = useState(props.promises);
   const [loading, setLoading] = useState(false);
 
-  const [postsEnd, setPostsEnd] = useState(false);
+  const [promiseEnd, setpromiseEnd] = useState(false);
 
   const [creator, setCreator] = useState("marius");
   const [isValid, setIsValid] = useState(false);
   const router = useRouter();
   // Search Creator
 
-  const getMorePosts = async () => {
+  const getMorePromises = async () => {
     setLoading(true);
-    const last = posts[posts.length - 1];
+    const last = promises[promises.length - 1];
 
     const cursor =
       typeof last.createdAt === "number"
@@ -46,19 +46,19 @@ export default function Home(props) {
         : last.createdAt;
 
     const query = firestore
-      .collectionGroup("posts")
+      .collectionGroup("promises")
       .where("published", "==", true)
       .orderBy("createdAt", "desc")
       .startAfter(cursor)
       .limit(LIMIT);
 
-    const newPosts = (await query.get()).docs.map((doc) => doc.data());
+    const newPromises = (await query.get()).docs.map((doc) => doc.data());
 
-    setPosts(posts.concat(newPosts));
+    setPromises(promises.concat(newPromises));
     setLoading(false);
 
-    if (newPosts.length < LIMIT) {
-      setPostsEnd(true);
+    if (newPromises.length < LIMIT) {
+      setpromiseEnd(true);
     }
   };
 
@@ -115,15 +115,15 @@ export default function Home(props) {
         <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
           Top Promises
         </h1>
-        <PostFeed posts={posts} admin={undefined} />
+        <PromiseFeed promises={promises} admin={undefined} />
 
-        {!loading && !postsEnd && (
-          <button onClick={getMorePosts}>Load more</button>
+        {!loading && !promiseEnd && (
+          <button onClick={getMorePromises}>Load more</button>
         )}
 
         <Loader show={loading} />
 
-        {postsEnd && "You have reached the end!"}
+        {promiseEnd && "You have reached the end!"}
       </main>
     </Layout>
   );

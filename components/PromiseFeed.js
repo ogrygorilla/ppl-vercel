@@ -1,16 +1,16 @@
 import Link from "next/link";
-import PromiseList from "../components/PromiseList";
+import PromiseList from "./PromiseList";
 import styles from "./PostFeed.module.css";
 import PromiseCard from "./PromiseCard";
 
-export default function PostFeed({ posts, admin }) {
+export default function PromiseFeed({ promises, admin }) {
   return (
     <div className="grid lg:grid-cols-3 sm:grid-cols-2 justify-center">
-      {posts
-        ? posts.map((post) => (
-            <PostItem
-              post={post}
-              key={post.slug}
+      {promises
+        ? promises.map((promise) => (
+            <PromiseItem
+              promise={promise}
+              key={promise.slug}
               admin={admin}
               className="justify-center w-full"
             />
@@ -20,11 +20,11 @@ export default function PostFeed({ posts, admin }) {
   );
 }
 
-function PostItem({ post, admin = false }) {
-  return <PromiseCard promiseVal={post} />;
+function PromiseItem({ promise, admin = false }) {
+  return <PromiseCard promiseVal={promise} />;
 }
 
-function PostItemAlt({ post, admin = false }) {
+function PromiseItemAlt({ promise, admin = false }) {
   return (
     <></>
     // <card

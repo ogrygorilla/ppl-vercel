@@ -45,7 +45,7 @@ export const increment = firebase.firestore.FieldValue.increment;
    * Converts a firestore document to JSON
    * @param  {DocumentSnapshot} doc
    */
-  export function postToJSON(doc) {
+  export function promiseToJSON(doc) {
     const data = doc.data();
     return {
       ...data,

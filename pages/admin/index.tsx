@@ -1,6 +1,6 @@
 // import styles from "../../styles/Admin.module.css";
 import AuthCheck from "../../components/AuthCheck";
-import PostFeed from "../../components/PostFeed";
+import PostFeed from "../../components/PromiseFeed";
 import { UserContext } from "../../lib/context";
 import { firestore, auth, serverTimestamp } from "../../lib/firebase";
 
@@ -15,16 +15,16 @@ import Layout from "../../components/Layout";
 import Hero from "../../components/Hero";
 import PromiseCard from "../../components/PromiseCard";
 
-export default function AdminPostsPage(props) {
+export default function AdminPromisesPage(props) {
   const [promiseVal, setPromiseVal] = useState({
     title: "Test",
     desc: "Das ist ein Beschreibung",
     //username: "streamer",
     price: 10,
   });
-  const [step, setstep] = useState(0);
+  // const [step, setstep] = useState(0);
 
-  const steps = ["Title", "Description", "Price"];
+  // const steps = ["Title", "Description", "Price"];
   //const [template, settemplate] = useState(true);
 
   // const title = template ? "Be quick with a template from below" : "Title";
@@ -38,7 +38,7 @@ export default function AdminPostsPage(props) {
           starter={false}
           child={
             <div>
-              <CreateNewPost
+              <CreateNewPromise
                 // promiseVal={promiseVal}
                 // setPromiseVal={setPromiseVal}
                 setPromiseVal={setPromiseVal}
@@ -54,7 +54,7 @@ export default function AdminPostsPage(props) {
   );
 }
 
-function CreateNewPost({ setPromiseVal }) {
+function CreateNewPromise({ setPromiseVal }) {
   const router = useRouter();
   const { username } = useContext(UserContext);
   const [title, setTitle] = useState("");
@@ -65,14 +65,14 @@ function CreateNewPost({ setPromiseVal }) {
   // Validate length
   const isValid = title.length > 3 && title.length < 100;
 
-  // Create a new post in firestore
-  const createPost = async (e) => {
+  // Create a new promise in firestore
+  const createPromise = async (e) => {
     e.preventDefault();
     const uid = auth.currentUser.uid;
     const ref = firestore
       .collection("users")
       .doc(uid)
-      .collection("posts")
+      .collection("promises")
       .doc(slug);
 
     // Tip: give all fields a default value here
@@ -97,7 +97,7 @@ function CreateNewPost({ setPromiseVal }) {
   };
 
   return (
-    <form onSubmit={createPost}>
+    <form onSubmit={createPromise}>
       <input
         value={title}
         onChange={(e) => {

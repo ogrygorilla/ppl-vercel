@@ -1,6 +1,10 @@
 // import styles from "../../styles/Post.module.css";
 // import PostContent from "../../components/PostContent";
-import { firestore, getUserWithUsername, postToJSON } from "../../lib/firebase";
+import {
+  firestore,
+  getUserWithUsername,
+  promiseToJSON,
+} from "../../lib/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import Link from "next/link";
 import AuthCheck from "../../components/AuthCheck";
@@ -10,25 +14,25 @@ export async function getStaticProps({ params }) {
   const { username, slug } = params;
   const userDoc = await getUserWithUsername(username);
 
-  let post;
+  let promise;
   let path;
 
   if (userDoc) {
-    const postRef = userDoc.ref.collection("posts").doc(slug);
-    post = postToJSON(await postRef.get());
+    const promiseRef = userDoc.ref.collection("promises").doc(slug);
+    promise = promiseToJSON(await promiseRef.get());
 
-    path = postRef.path;
+    path = promiseRef.path;
   }
 
   return {
-    props: { post, path },
+    props: { promise, path },
     revalidate: 5000,
   };
 }
 
 export async function getStaticPaths() {
   // Improve my using Admin SDK to select empty docs
-  const snapshot = await firestore.collectionGroup("posts").get();
+  const snapshot = await firestore.collectionGroup("promises").get();
 
   const paths = snapshot.docs.map((doc) => {
     const { slug, username } = doc.data();
@@ -46,25 +50,25 @@ export async function getStaticPaths() {
     fallback: "blocking",
   };
 }
-export default function Post(props) {
-  const postRef = firestore.doc(props.path);
+export default function Promise(props) {
+  const promiseRef = firestore.doc(props.path);
 
-  console.log(props.post);
-  // const [realtimePost] = useDocumentData(postRef);
+  // console.log(props.post);
+  // const [realtimePost] = useDocumentData(promiseRef);
 
-  const post = props.post;
+  const promise = props.promise;
 
   return (
     <>
-      {post && (
+      {promise && (
         <main>
           <section>
-            <PostContent post={post} />
+            <PromiseContent promise={promise} />
           </section>
 
           <aside>
             <p>
-              <strong>{post.heartCount || 0} </strong>
+              <strong>{promise.heartCount || 0} </strong>
             </p>
 
             {/* <AuthCheck
@@ -74,7 +78,7 @@ export default function Post(props) {
             </Link>
           }
         >
-          <HeartButton postRef={postRef} />
+          <HeartButton promiseRef={promiseRef} />
         </AuthCheck> */}
           </aside>
         </main>
@@ -83,24 +87,24 @@ export default function Post(props) {
   );
 }
 
-function PostContent({ post }) {
+function PromiseContent({ promise }) {
   const createdAt =
-    typeof post?.createdAt === "number"
-      ? new Date(post.createdAt)
-      : post.createdAt.toDate();
+    typeof promise?.createdAt === "number"
+      ? new Date(promise.createdAt)
+      : promise.createdAt.toDate();
 
   return (
     <div className="card">
-      <h1>{post?.title}</h1>
+      <h1>{promise?.title}</h1>
       <span className="text-sm">
         Written by{" "}
-        <Link href={`/${post.username}/`}>
-          <a className="text-info">@{post.username}</a>
+        <Link href={`/${promise.username}/`}>
+          <a className="text-info">@{promise.username}</a>
         </Link>{" "}
         on {createdAt.toISOString()}
       </span>
-      <p>{post?.content}</p>
-      {/* <ReactMarkdown>{post?.content}</ReactMarkdown> */}
+      <p>{promise?.content}</p>
+      {/* <ReactMarkdown>{promise?.content}</ReactMarkdown> */}
     </div>
   );
 }
