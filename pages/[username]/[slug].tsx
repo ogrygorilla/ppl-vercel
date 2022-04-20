@@ -46,25 +46,28 @@ export async function getStaticPaths() {
     fallback: "blocking",
   };
 }
-
 export default function Post(props) {
   const postRef = firestore.doc(props.path);
+
+  console.log(props.post);
   // const [realtimePost] = useDocumentData(postRef);
 
   const post = props.post;
 
   return (
-    <main>
-      <section>
-        <PostContent post={post} />
-      </section>
+    <>
+      {post && (
+        <main>
+          <section>
+            <PostContent post={post} />
+          </section>
 
-      <aside>
-        <p>
-          <strong>{post.heartCount || 0} </strong>
-        </p>
+          <aside>
+            <p>
+              <strong>{post.heartCount || 0} </strong>
+            </p>
 
-        {/* <AuthCheck
+            {/* <AuthCheck
           fallback={
             <Link href="/enter">
               <button>💗 Sign Up</button>
@@ -73,8 +76,10 @@ export default function Post(props) {
         >
           <HeartButton postRef={postRef} />
         </AuthCheck> */}
-      </aside>
-    </main>
+          </aside>
+        </main>
+      )}
+    </>
   );
 }
 
