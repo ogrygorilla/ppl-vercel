@@ -53,7 +53,7 @@ export default function UserProfilePage({ user, promises }) {
         <h1 className="m-8 text-2xl sm:text-4xl text-center">
           Wähle einen Gutschein aus
         </h1>
-        <PromiseFeed promises={promises} admin={undefined} />
+        <PromiseFeed promises={promises} admin={true} />
       </main>
     </Layout>
   );

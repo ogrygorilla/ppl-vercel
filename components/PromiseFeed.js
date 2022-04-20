@@ -8,12 +8,23 @@ export default function PromiseFeed({ promises, admin }) {
     <div className="grid lg:grid-cols-3 sm:grid-cols-2 justify-center">
       {promises
         ? promises.map((promise) => (
-            <PromiseItem
-              promise={promise}
-              key={promise.slug}
-              admin={admin}
-              className="justify-center w-full"
-            />
+            <div className="flex flex-col">
+              <PromiseItem
+                promise={promise}
+                key={promise.slug}
+                admin={admin}
+                className="justify-center w-full"
+              />
+              {admin && (
+                <Link href={`/admin/${promise.slug}`}>
+                  <h3>
+                    <button className=" m-auto rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl px-8">
+                      Edit
+                    </button>
+                  </h3>
+                </Link>
+              )}
+            </div>
           ))
         : null}
     </div>
@@ -21,7 +32,7 @@ export default function PromiseFeed({ promises, admin }) {
 }
 
 function PromiseItem({ promise, admin = false }) {
-  return <PromiseCard promiseVal={promise} />;
+  return <PromiseCard promiseVal={promise} admin={admin} />;
 }
 
 function PromiseItemAlt({ promise, admin = false }) {
