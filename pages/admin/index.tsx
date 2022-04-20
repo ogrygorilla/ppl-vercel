@@ -17,83 +17,53 @@ import PromiseCard from "../../components/PromiseCard";
 
 export default function AdminPostsPage(props) {
   const [promiseVal, setPromiseVal] = useState({
-    title: "Spiel wählen",
-    desc: "Du darfst das Spiel des nächsten Streams wählen",
-    username: "streamer",
+    title: "Test",
+    desc: "Das ist ein Beschreibung",
+    //username: "streamer",
     price: 10,
   });
+  const [step, setstep] = useState(0);
+
+  const steps = ["Title", "Description", "Price"];
+  //const [template, settemplate] = useState(true);
+
+  // const title = template ? "Be quick with a template from below" : "Title";
+  // const btnTitle = template ? "or Start from scratch" : "Go back";
 
   return (
     <AuthCheck>
       <Layout title={"Admin"}>
         <Hero
-          title={"Be quick with a template from below"}
+          title={"Create Promise"}
           starter={false}
           child={
-            // <CreateNewPost
-            //   promiseVal={promiseVal}
-            //   setPromiseVal={setPromiseVal}
-            // />
-            <div className="space-x-2 flex justify-center">
-              {/* <Link href={"/profile"}> */}
-              <button className="mb-2 rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8">
-                or Start from scratch
-              </button>
-              {/* </Link> */}
+            <div>
+              <CreateNewPost
+                // promiseVal={promiseVal}
+                // setPromiseVal={setPromiseVal}
+                setPromiseVal={setPromiseVal}
+              />
             </div>
           }
         />
-        <main>
-          <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
-            Templates
-          </h1>
-          {/* <PostFeed posts={posts} admin={undefined} /> */}
-          {/* 
-        {!loading && !postsEnd && (
-          <button onClick={getMorePosts}>Load more</button>
-        )}
-
-        <Loader show={loading} />
-
-        {postsEnd && "You have reached the end!"} */}
-          <PromiseCard promiseVal={promiseVal} />
-        </main>
+        <div className="flex justify-center">
+          <PromiseCard promiseVal={promiseVal} disabled={true} />
+        </div>
       </Layout>
     </AuthCheck>
   );
 }
 
-function PostList() {
-  // const ref = firestore
-  //   .collection("users")
-  //   .doc(auth.currentUser.uid)
-  //   .collection("posts");
-  // const query = ref.orderBy("createdAt");
-  // const [querySnapshot] = useCollection(query);
-
-  // const posts = querySnapshot?.docs.map((doc) => doc.data());
-  return (
-    <>
-      <h1>Manage your Posts</h1>
-      {/* <PostFeed posts={posts} admin /> */}
-    </>
-  );
-}
-
-function CreateNewPost({ promiseVal, setPromiseVal }) {
+function CreateNewPost({ setPromiseVal }) {
   const router = useRouter();
   const { username } = useContext(UserContext);
+  const [title, setTitle] = useState("");
 
   // Ensure slug is URL safe
-  const slug = encodeURI(kebabCase(promiseVal.title));
+  const slug = encodeURI(kebabCase(title));
 
   // Validate length
-  const isValid = promiseVal.title.length > 3 && promiseVal.title.length < 100;
-
-  //Go to next step
-  const checkNext = (e) => {
-    e.preventDefault();
-  };
+  const isValid = title.length > 3 && title.length < 100;
 
   // Create a new post in firestore
   const createPost = async (e) => {
@@ -107,12 +77,12 @@ function CreateNewPost({ promiseVal, setPromiseVal }) {
 
     // Tip: give all fields a default value here
     const data = {
-      title: promiseVal.title ?? "Test",
-      slug,
+      title: title ?? "TestTitle",
+      slug: slug ?? "test-title",
       uid,
       username,
       published: true,
-      content: "# hello world!",
+      content: "Das ist ein Test",
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
       heartCount: 0,
@@ -127,19 +97,22 @@ function CreateNewPost({ promiseVal, setPromiseVal }) {
   };
 
   return (
-    <form onSubmit={checkNext}>
+    <form onSubmit={createPost}>
       <input
-        value={promiseVal.title}
-        onChange={(e) => setPromiseVal({ title: e.target.value })}
+        value={title}
+        onChange={(e) => {
+          setTitle(e.target.value);
+          setPromiseVal({ title: e.target.value });
+        }}
         placeholder="Promise Title"
-        // classNameName={styles.input}
+        // className={styles.input}
       />
       <button
         type="submit"
         disabled={!isValid}
-        className="bg-[#60A5FA] text-white"
+        className="rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8 mt-2"
       >
-        Ok
+        Create New Promise
       </button>
     </form>
   );

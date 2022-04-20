@@ -3,6 +3,7 @@ import {getAuth} from 'firebase/auth'
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/storage';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 const firebaseConfig ={
     apiKey: "AIzaSyDBScsxlr-BSh_6StoQ5mA7pomJglHyrOU",
@@ -24,6 +25,10 @@ export const githubAuthProvider = new firebase.auth.GithubAuthProvider();
 
 export const firestore = firebase.firestore();
 export const storage = firebase.storage();
+
+export const fromMillis = firebase.firestore.Timestamp.fromMillis;
+export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
+export const increment = firebase.firestore.FieldValue.increment;
 
 /**`
  * Gets a users/{uid} document with username
@@ -49,7 +54,3 @@ export const storage = firebase.storage();
       updatedAt: data.updatedAt.toMillis(),
     };
   }
-
-  export const fromMillis = firebase.firestore.Timestamp.fromMillis;
-  export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
-  export const increment = firebase.firestore.FieldValue.increment;
