@@ -37,11 +37,13 @@ export default function Navbar() {
 
         {/* user is not signed OR has not created username */}
         {!username && (
-          <li>
-            <Link href="/enter">
-              <button className="btn-blue">Log in</button>
+          <div className="mr-6 mb-2 flex flex-shrink-0 items-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-2xl font-bold text-transparent sm:text-5xl">
+            <Link href={"/enter"}>
+              <span className="hover:cursor-pointer text-xl font-semibold tracking-tight">
+                Login
+              </span>
             </Link>
-          </li>
+          </div>
         )}
       </ul>
     </nav>

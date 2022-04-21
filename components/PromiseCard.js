@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function PromiseCard({ promiseVal, disabled }) {
   return (
-    <div className="hover:shadow-lg bg-slate-200 h-[400px] max-w-[250px] w-full overflow-hidden cursor-pointer justify-self-center transition-all rounded shadow-[0_8px_30px_rgba(0,0,0,0.3)] m-4">
+    <div className="hover:shadow-lg bg-white h-[250px] max-w-[400px] w-full overflow-hidden cursor-pointer justify-self-center transition-all rounded-lg shadow-[0_8px_30px_rgba(0,0,0,0.3)] m-4">
       {/* <button className="card__save  js-save" type="button">
         <i className="fa  fa-bookmark"></i>
       </button> */}
@@ -22,12 +22,12 @@ export default function PromiseCard({ promiseVal, disabled }) {
             {promiseVal.username}
           </p>
         </Link>
-        <button
+        {/* <button
           disabled={disabled}
           className="m-auto rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8"
         >
           20 €
-        </button>
+        </button> */}
       </div>
     </div>
   );

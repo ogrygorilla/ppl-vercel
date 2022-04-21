@@ -6,14 +6,16 @@ import Head from "next/head";
 
 export default function Layout({ children, title }) {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Navbar />
-      {children}
-      <Footer />
+    <div>
+      <div className="flex min-h-screen flex-col ">
+        <Head>
+          <title>{title}</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <Navbar />
+        {children}
+      </div>
+      {/* <Footer /> */}
     </div>
   );
 }

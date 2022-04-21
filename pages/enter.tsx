@@ -13,7 +13,7 @@ export default function Enter(props) {
   // 3. user signed in, has username <SignOutButton />
   return (
     <Layout title={"Enter"}>
-      <main>
+      <main className="mt-40">
         {/* <Metatags title="Enter" description="Sign up for this amazing app!" /> */}
         {user ? (
           !username ? (

@@ -3,12 +3,12 @@ import Link from "next/link";
 
 export default function Hero({ title, starter, child }) {
   return (
-    <div className="h-64 bg-blue-100">
+    <div className="h-80 bg-blue-100">
       <main
-        className="flex h-full flex-col bg-blue-100 text-center"
+        className="flex h-full flex-col justify-center bg-blue-100 text-center"
         // style="background-image: url('https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=702&q=80'); background-size: cover"
       >
-        <h1 className="mb-2 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
+        <h1 className="mb-2 mt-10 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
           {title}
         </h1>
         {child}

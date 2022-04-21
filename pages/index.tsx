@@ -7,6 +7,8 @@ import Layout from "../components/Layout";
 import Hero from "../components/Hero";
 import { useRouter } from "next/router";
 import PromiseFeed from "../components/PromiseFeed";
+import ContentCreator from "../components/ContentCreator";
+import PromiseCard from "../components/PromiseCard";
 
 // Max promise to query per page
 const LIMIT = 3;
@@ -111,7 +113,52 @@ export default function Home(props) {
           </form>
         }
       />
-      <main>
+      <main className="flex flex-grow">
+        <div className="grid sm:grid-cols-2 w-full">
+          <div className="w-full">
+            <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-4xl">
+              Unsere aktuellen Partner
+            </h1>
+            <div>
+              <ContentCreator name={"Jese Leos"} joined={"April 2022"} />
+            </div>
+            <div className="mt-4">
+              <ContentCreator name={"Adrian Heitmann"} joined={"April 2021"} />
+            </div>
+            <div className="mt-4">
+              <ContentCreator name={"Alex"} joined={"November 2021"} />
+            </div>
+          </div>
+          <div className="w-full flex flex-col ">
+            <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-4xl">
+              Beliebter Gutschein
+            </h1>
+            <div className="mb-40 h-[200px] max-w-[400px] w-full bg-blue-100 self-start justify-self-start flex flex-col">
+              <div className="hover:shadow-lg bg-white h-[250px] max-w-[400px] w-full overflow-hidden cursor-pointer justify-self-center transition-all rounded-lg shadow-[0_8px_30px_rgba(0,0,0,0.3)] ml-3 mb-3">
+                <div className="space-y-1 text-xl font-medium dark:text-white text-center mt-4 flex flex-col">
+                  <div>Spiel wählen</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    Wähle das Spiel eines Streams aus
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    @Adrian
+                  </div>
+                </div>
+              </div>
+              {/* <PromiseCard
+              promiseVal={{
+                title: "Spiel wählen",
+                content: "Wähle das Spiel eines Streams aus",
+                username: "@Adrian",
+              }}
+              disabled={true}
+            /> */}
+            </div>
+          </div>
+        </div>
+      </main>
+      {/* --Promise Feed-- */}
+      {/* <main>
         <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
           Top Promises
         </h1>
@@ -124,7 +171,7 @@ export default function Home(props) {
         <Loader show={loading} />
 
         {promiseEnd && "You have reached the end!"}
-      </main>
+      </main> */}
     </Layout>
   );
 }
