@@ -63,32 +63,51 @@ export async function getServerSideProps({ query }) {
 export default function UserProfilePage({ user, promises }) {
   //Twitch Api Anfang (clr)
   const [data, setData] = useState(null);
+  const [moreData, setMoreData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
   // const { login } = router.query;
   const { username } = router.query;
 
-  useEffect(() => {
-    setLoading(true);
-    fetch(`https://api.twitch.tv/helix/users/?login=${username}`, {
+  const fetchData = (url) => {
+    return fetch(url, {
       headers: {
         Authorization: "Bearer 05g9fpizwuyulw71p7mzx3jlezn30n",
         "Client-Id": "u6u44epveer081p4xte3h4q2tuifcl",
       },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      });
-  }, []);
+    });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+
+    if (data == null) {
+      fetchData(`https://api.twitch.tv/helix/users/?login=${username}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data);
+          setLoading(false);
+        });
+    }
+
+    if (data != null && moreData == null) {
+      fetchData(
+        `https://api.twitch.tv/helix/streams?user_id=${data.data[0].id}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setMoreData(data);
+          setLoading(false);
+        });
+    }
+  }, [data]);
 
   if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No profile data</p>;
-
-  //twitch api ende
+  if (!data || !moreData) return <p>No profile data</p>;
 
   const userData = data.data[0];
+  const moreUserData = moreData.data[0];
+  //twitch api ende
 
   return (
     <Layout title={"Profile"}>
@@ -102,6 +121,7 @@ export default function UserProfilePage({ user, promises }) {
           {/* <h1>{user.displayName || "Anonymous User"}</h1> */}
           <p className="mt-4">{userData.description}</p>
           <p className="mt-4">Typ: {userData.broadcaster_type}</p>
+          <p>Sprache: {moreUserData.language}</p>
         </div>
         <hr />
         <h1 className="m-8 text-2xl sm:text-4xl text-center">
