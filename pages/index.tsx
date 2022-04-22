@@ -13,19 +13,20 @@ import PromiseCard from "../components/PromiseCard";
 // Max promise to query per page
 const LIMIT = 3;
 
-export async function getServerSideProps(context) {
-  const promiseQuery = firestore
-    .collectionGroup("promises")
-    .where("published", "==", true)
-    .orderBy("createdAt", "desc")
-    .limit(LIMIT);
+//Immer aktueller Inhalt, viele Abfragen
+// export async function getServerSideProps(context) {
+//   const promiseQuery = firestore
+//     .collectionGroup("promises")
+//     .where("published", "==", true)
+//     .orderBy("createdAt", "desc")
+//     .limit(LIMIT);
 
-  const promises = (await promiseQuery.get()).docs.map(promiseToJSON);
+//   const promises = (await promiseQuery.get()).docs.map(promiseToJSON);
 
-  return {
-    props: { promises }, // will be passed to the page component as props
-  };
-}
+//   return {
+//     props: { promises }, // will be passed to the page component as props
+//   };
+// }
 
 export default function Home(props) {
   const [promises, setPromises] = useState(props.promises);

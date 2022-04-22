@@ -1,6 +1,5 @@
 import Link from "next/link";
 import PromiseList from "./PromiseList";
-import styles from "./PostFeed.module.css";
 import PromiseCard from "./PromiseCard";
 
 export default function PromiseFeed({ promises, admin }) {

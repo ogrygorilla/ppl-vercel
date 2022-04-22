@@ -72,8 +72,6 @@
 //   );
 // }
 
-import styles from "./Promise.module.css";
-
 export default function Promise({ post }) {
   return <></>;
 }
