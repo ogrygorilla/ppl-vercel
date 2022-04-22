@@ -119,15 +119,83 @@ export default function Home(props) {
               <Link href={"/marius"}>
                 <button className="m-auto mt-4 rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8">
                   Suche
+                  <svg
+                    className="w-6 h-6 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    ></path>
+                  </svg>
                 </button>
               </Link>
             </div>
           </div>
         }
       />
-      <main className="flex flex-grow">
+      <main className="flex flex-grow ">
         <div className="grid sm:grid-cols-2 w-full">
           <div className="w-full">
+            <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-4xl">
+              Unsere aktuellen Partner
+            </h1>
+            <div className="">
+              <ContentCreator name={"Jese Leos"} joined={"April 2022"} />
+            </div>
+            <div className="mt-4">
+              <ContentCreator name={"Adrian Heitmann"} joined={"April 2021"} />
+            </div>
+            <div className="mt-4">
+              <ContentCreator name={"Alex"} joined={"November 2021"} />
+            </div>
+          </div>
+          <div className="w-full">
+            <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-4xl">
+              Beliebter Gutschein
+            </h1>
+            <a
+              href="#"
+              className="overflow-hidden max-h-64 block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+            >
+              <div className="flex">
+                <h5 className="flex-grow mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Spiel wählen
+                </h5>
+                <svg
+                  className="w-6 h-6 min-h-6 min-w-6 justify-end"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                  ></path>
+                </svg>
+              </div>
+              <p className="font-normal text-gray-700 dark:text-gray-400">
+                Wähle ein Spiel aus, welches in einem meiner Streams gespielt
+                wird.
+              </p>
+              <p className="font-light text-gray-700 dark:text-gray-400 mt-4">
+                @Adrian
+              </p>
+            </a>
+          </div>
+        </div>
+      </main>
+      {/* <main className="flex">
+        <div className="grid sm:grid-cols-2 w-full">
+          <div className="w-full bg-green-200">
             <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-4xl">
               Unsere aktuellen Partner
             </h1>
@@ -157,18 +225,10 @@ export default function Home(props) {
                   </div>
                 </div>
               </div>
-              {/* <PromiseCard
-              promiseVal={{
-                title: "Spiel wählen",
-                content: "Wähle das Spiel eines Streams aus",
-                username: "@Adrian",
-              }}
-              disabled={true}
-            /> */}
             </div>
           </div>
         </div>
-      </main>
+      </main> */}
       {/* --Promise Feed-- */}
       {/* <main>
         <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
