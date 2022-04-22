@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import PromiseFeed from "../components/PromiseFeed";
 import ContentCreator from "../components/ContentCreator";
 import PromiseCard from "../components/PromiseCard";
+import Link from "next/link";
 
 // Max promise to query per page
 const LIMIT = 3;
@@ -100,18 +101,28 @@ export default function Home(props) {
   return (
     <Layout title={"Home"}>
       <Hero
-        title={"Search your Content Creator"}
+        title={"Suche einen Content Creator"}
         starter={false}
         child={
-          <form onSubmit={handleSubmit}>
-            <input
-              value={creator}
-              onChange={(e) => setCreator(e.target.value.toLowerCase())}
-              placeholder="Search Creator"
-              className="mt-2"
-            />
-            <input type="submit" hidden />
-          </form>
+          <div className="flex">
+            <div className="flex-grow mr-4">
+              <form onSubmit={() => {}}>
+                <input
+                  // onChange={(e) => setCreator(e.target.value.toLowerCase())}
+                  placeholder="Creator suchen"
+                  className="mt-4 rounded-lg"
+                />
+                <input type="submit" hidden />
+              </form>
+            </div>
+            <div className="">
+              <Link href={"/marius"}>
+                <button className="m-auto mt-4 rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8">
+                  Suche
+                </button>
+              </Link>
+            </div>
+          </div>
         }
       />
       <main className="flex flex-grow">

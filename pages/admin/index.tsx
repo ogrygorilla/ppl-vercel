@@ -97,23 +97,49 @@ function CreateNewPromise({ setPromiseVal }) {
   };
 
   return (
-    <form onSubmit={createPromise}>
-      <input
-        value={title}
-        onChange={(e) => {
-          setTitle(e.target.value);
-          setPromiseVal({ title: e.target.value });
-        }}
-        placeholder="Promise Title"
-        // className={styles.input}
-      />
-      <button
-        type="submit"
-        disabled={!isValid}
-        className="rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8 mt-2"
-      >
-        Create New Promise
-      </button>
-    </form>
+    <div className="flex">
+      <div className="flex-grow mr-4">
+        <form onSubmit={createPromise}>
+          <input
+            // onChange={(e) => setCreator(e.target.value.toLowerCase())}
+            className="mt-4 rounded-lg"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              setPromiseVal({ title: e.target.value });
+            }}
+            placeholder="Promise Title"
+          />
+          <input type="submit" hidden />
+        </form>
+      </div>
+      <div className="">
+        <button
+          type="submit"
+          disabled={!isValid}
+          className="m-auto mt-4 rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8"
+        >
+          Create New Promise
+        </button>
+      </div>
+    </div>
+    // <form onSubmit={createPromise}>
+    //   <input
+    //     value={title}
+    //     onChange={(e) => {
+    //       setTitle(e.target.value);
+    //       setPromiseVal({ title: e.target.value });
+    //     }}
+    //     placeholder="Promise Title"
+    //     // className={styles.input}
+    //   />
+    //   <button
+    //     type="submit"
+    //     disabled={!isValid}
+    //     className="rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8 mt-2"
+    //   >
+    //     Create New Promise
+    //   </button>
+    // </form>
   );
 }

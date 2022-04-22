@@ -22,7 +22,7 @@ export default function Landing(props) {
                 <form onSubmit={() => {}}>
                   <input
                     // onChange={(e) => setCreator(e.target.value.toLowerCase())}
-                    placeholder="Search Creator"
+                    placeholder="Creator suchen"
                     className="mt-4 rounded-lg"
                   />
                   <input type="submit" hidden />
