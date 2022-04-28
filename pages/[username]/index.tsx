@@ -121,7 +121,7 @@ export default function UserProfilePage({ user, promises }) {
           {/* <h1>{user.displayName || "Anonymous User"}</h1> */}
           <p className="mt-4">{userData.description}</p>
           <p className="mt-4">Typ: {userData.broadcaster_type}</p>
-          <p>Sprache: {moreUserData.language}</p>
+          {/* <p>Sprache: {moreUserData.language}</p> */}
         </div>
         <hr />
         <h1 className="m-8 text-2xl sm:text-4xl text-center">
