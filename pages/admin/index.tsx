@@ -47,7 +47,7 @@ export default function AdminPromisesPage(props) {
           }
         />
         <div className="flex justify-center">
-          <PromiseCard promiseVal={promiseVal} disabled={true} />
+          <PromiseCard content={promiseVal} disabled={true} />
         </div>
       </Layout>
     </AuthCheck>

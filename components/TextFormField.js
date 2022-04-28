@@ -1,12 +1,13 @@
 import React from "react";
+import Link from "next/link";
 
-export default function TextFormField() {
+export default function TextFormField({ handleSubmit, linkTo, setX }) {
   return (
     <div className="flex">
       <div className="flex-grow mr-4">
         <form onSubmit={handleSubmit}>
           <input
-            onChange={(e) => setCreator(e.target.value.toLowerCase())}
+            onChange={(e) => setX(e.target.value.toLowerCase())}
             placeholder="Creator suchen"
             className="mt-4 rounded-lg"
           />
@@ -14,7 +15,7 @@ export default function TextFormField() {
         </form>
       </div>
       <div className="">
-        <Link href={`/${creator}`}>
+        <Link href={`/${linkTo}`}>
           <button className="m-auto mt-4 rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8">
             Suche
             <svg

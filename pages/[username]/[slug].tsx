@@ -9,6 +9,8 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import Link from "next/link";
 import AuthCheck from "../../components/AuthCheck";
 import HeartButton from "../../components/HeartButton";
+import PromiseCard from "../../components/PromiseCard";
+import PromiseFeed from "../../components/PromiseFeed";
 
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
@@ -57,30 +59,13 @@ export default function Promise(props) {
   // const [realtimePost] = useDocumentData(promiseRef);
 
   const promise = props.promise;
-
   return (
     <>
       {promise && (
         <main>
           <section>
-            <PromiseContent promise={promise} />
+            <PromiseFeed promises={[promise]} admin />
           </section>
-
-          <aside>
-            <p>
-              <strong>{promise.heartCount || 0} </strong>
-            </p>
-
-            {/* <AuthCheck
-          fallback={
-            <Link href="/enter">
-              <button>💗 Sign Up</button>
-            </Link>
-          }
-        >
-          <HeartButton promiseRef={promiseRef} />
-        </AuthCheck> */}
-          </aside>
         </main>
       )}
     </>

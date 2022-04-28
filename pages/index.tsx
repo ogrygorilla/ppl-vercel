@@ -9,25 +9,26 @@ import { useRouter } from "next/router";
 import PromiseFeed from "../components/PromiseFeed";
 import ContentCreator from "../components/ContentCreator";
 import PromiseCard from "../components/PromiseCard";
+import TextFormField from "../components/TextFormField";
 import Link from "next/link";
 
 // Max promise to query per page
 const LIMIT = 3;
 
 //Immer aktueller Inhalt, viele Abfragen
-// export async function getServerSideProps(context) {
-//   const promiseQuery = firestore
-//     .collectionGroup("promises")
-//     .where("published", "==", true)
-//     .orderBy("createdAt", "desc")
-//     .limit(LIMIT);
+export async function getServerSideProps(context) {
+  const promiseQuery = firestore
+    .collectionGroup("promises")
+    .where("published", "==", true)
+    .orderBy("createdAt", "desc")
+    .limit(LIMIT);
 
-//   const promises = (await promiseQuery.get()).docs.map(promiseToJSON);
+  const promises = (await promiseQuery.get()).docs.map(promiseToJSON);
 
-//   return {
-//     props: { promises }, // will be passed to the page component as props
-//   };
-// }
+  return {
+    props: { promises }, // will be passed to the page component as props
+  };
+}
 
 export default function Home(props) {
   const [promises, setPromises] = useState(props.promises);
@@ -105,42 +106,14 @@ export default function Home(props) {
         starter={false}
         child={
           //* TextFormField Component - Search Creators
-          <div className="flex">
-            <div className="flex-grow mr-4">
-              <form onSubmit={handleSubmit}>
-                <input
-                  onChange={(e) => setCreator(e.target.value.toLowerCase())}
-                  placeholder="Creator suchen"
-                  className="mt-4 rounded-lg"
-                />
-                <input type="submit" hidden />
-              </form>
-            </div>
-            <div className="">
-              <Link href={`/${creator}`}>
-                <button className="m-auto mt-4 rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8">
-                  Suche
-                  <svg
-                    className="w-6 h-6 ml-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    ></path>
-                  </svg>
-                </button>
-              </Link>
-            </div>
-          </div>
+          <TextFormField
+            handleSubmit={handleSubmit}
+            linkTo={creator}
+            setX={setCreator}
+          />
         }
       />
-      <main className="flex flex-grow ">
+      {/* <main className="flex flex-grow ">
         <div className="grid sm:grid-cols-2 w-full">
           <div className="w-full">
             <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-4xl">
@@ -193,9 +166,9 @@ export default function Home(props) {
             </a>
           </div>
         </div>
-      </main>
-      {/* --Promise Feed-- */}
-      {/* <main>
+      </main> */}
+      {/* //*Promise Feed - Render Promise Cards */}
+      <main>
         <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
           Top Promises
         </h1>
@@ -208,7 +181,7 @@ export default function Home(props) {
         <Loader show={loading} />
 
         {promiseEnd && "You have reached the end!"}
-      </main> */}
+      </main>
     </Layout>
   );
 }

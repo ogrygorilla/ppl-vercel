@@ -90,16 +90,17 @@ export default function UserProfilePage({ user, promises }) {
         });
     }
 
-    if (data != null && moreData == null) {
-      fetchData(
-        `https://api.twitch.tv/helix/streams?user_id=${data.data[0].id}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          setMoreData(data);
-          setLoading(false);
-        });
-    }
+    //* Get more data about streamer
+    // if (data != null && moreData == null) {
+    //   fetchData(
+    //     `https://api.twitch.tv/helix/streams?user_id=${data.data[0].id}`
+    //   )
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //       setMoreData(data);
+    //       setLoading(false);
+    //     });
+    // }
   }, [data]);
 
   if (isLoading) return <p>Loading...</p>;

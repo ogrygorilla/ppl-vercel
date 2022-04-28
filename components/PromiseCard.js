@@ -1,34 +1,70 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
+import { UserContext } from "../lib/context";
+import { firestore } from "../lib/firebase";
 
-export default function PromiseCard({ promiseVal, disabled }) {
+export default function PromiseCard({ content, disabled }) {
+  const { user } = useContext(UserContext);
+
+  const [star, setStar] = useState(content.owner);
+
+  const onReserve = async (e) => {
+    e.preventDefault();
+
+    if (content.owner == "" || content.owner == user.uid) {
+      // Create refs for promise
+      const promiseRef = firestore.doc(
+        `users/${user.uid}/promises/${content.slug}`
+      );
+
+      const batch = firestore.batch();
+
+      if (content.owner === user.uid) {
+        //Update the owner of the promise
+        batch.update(promiseRef, { owner: "" });
+        setStar("");
+      } else {
+        //Update the owner of the promise
+        batch.update(promiseRef, { owner: user.uid });
+        setStar("set");
+      }
+
+      await batch.commit();
+      console.log(star);
+    }
+  };
+
   return (
-    <div className="hover:shadow-lg bg-white h-[250px] max-w-[400px] w-full overflow-hidden cursor-pointer justify-self-center transition-all rounded-lg shadow-[0_8px_30px_rgba(0,0,0,0.3)] m-4">
-      {/* <button className="card__save  js-save" type="button">
-        <i className="fa  fa-bookmark"></i>
-      </button> */}
-      <div className="mt-4 h-full flex flex-col">
-        <Link href={`/${promiseVal.username}/${promiseVal.slug}`}>
-          <h1 className="p-4 whitespace-nowrap overflow-hidden text-ellipsis text-center">
-            {promiseVal.title}
-          </h1>
-        </Link>
-        {/* <p className="card__job">astronaut & engineer</p> */}
-        <p className="mt-4 text-center font-light">
-          {promiseVal.content ?? "das ist eine Beschreibung"}
-        </p>
-        <Link href={`/${promiseVal.username}`}>
-          <p className="mt-12 mb-2 text-sm text-center justify-end">
-            {promiseVal.username}
-          </p>
-        </Link>
-        {/* <button
-          disabled={disabled}
-          className="m-auto rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8"
+    // <Link href={`/${content.username}/${content.slug}`}>
+    <div className="overflow-hidden max-h-64 block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 hover:cursor-pointer">
+      <div className="flex">
+        <h5 className="flex-grow mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          {content.title ?? "Testtitel"}
+        </h5>
+        <svg
+          className="w-6 h-6 min-h-6 min-w-6 justify-end"
+          fill={star == "" ? "none" : "some"}
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          onClick={(e) => onReserve(e)}
         >
-          20 €
-        </button> */}
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+          ></path>
+        </svg>
+        {/* <PromiseCardReserveBtn userId={user.uid} content={content} /> */}
       </div>
+      <p className="font-normal text-gray-700 dark:text-gray-400">
+        {content.content ?? "Testinhalt"}
+      </p>
+      <p className="font-light text-gray-700 dark:text-gray-400 mt-4">
+        @{content.username ?? "Testnutzer"}
+      </p>
     </div>
+    // </Link>
   );
 }
