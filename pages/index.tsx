@@ -30,17 +30,23 @@ export async function getInitialProps(context) {
   };
 }
 
+/**
+ * Homepage with Search and Promises
+ * @param props promises loaded from getServerSideProps
+ * @returns
+ */
 export default function Home(props) {
   const [promises, setPromises] = useState(props.promises);
   const [loading, setLoading] = useState(false);
-
   const [promiseEnd, setpromiseEnd] = useState(false);
-
   const [creator, setCreator] = useState("");
   const [isValid, setIsValid] = useState(false);
   const router = useRouter();
-  // Search Creator
 
+  /**
+   * Load more Button executes this function
+   * Hits the db and Loads more Promises (with LIMIT)
+   */
   const getMorePromises = async () => {
     setLoading(true);
     const last = promises[promises.length - 1];
@@ -87,6 +93,9 @@ export default function Home(props) {
     f(e);
   };
 
+  /**
+   * Search for a creator and go the streamers profile
+   */
   const handleSubmit = preventDefault(() => {
     // checkUsername(creator);
     const path = "/" + creator;
@@ -113,6 +122,7 @@ export default function Home(props) {
           />
         }
       />
+      {/* //*Partner and Popular Promise Section */}
       {/* <main className="flex flex-grow ">
         <div className="grid sm:grid-cols-2 w-full">
           <div className="w-full">
