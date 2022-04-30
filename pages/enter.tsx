@@ -5,6 +5,11 @@ import { useEffect, useState, useCallback, useContext } from "react";
 import debounce from "lodash.debounce";
 import Layout from "../components/Layout";
 
+/**
+ *
+ * @param props the properties of the page
+ * @returns
+ */
 export default function Enter(props) {
   const { user, username } = useContext(UserContext);
 
@@ -92,8 +97,6 @@ function UsernameForm() {
       setIsValid(false);
     }
   };
-
-  //
 
   useEffect(() => {
     checkUsername(formValue);
