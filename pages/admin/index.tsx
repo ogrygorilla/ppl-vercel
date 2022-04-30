@@ -16,9 +16,12 @@ import Hero from "../../components/Hero";
 import PromiseCard from "../../components/PromiseCard";
 
 export default function AdminPromisesPage(props) {
+  const { username } = useContext(UserContext);
+
   const [promiseVal, setPromiseVal] = useState({
     title: "Test",
-    desc: "Das ist ein Beschreibung",
+    content: "Das ist ein Beschreibung",
+    username: username,
     //username: "streamer",
     price: 10,
   });
@@ -39,8 +42,7 @@ export default function AdminPromisesPage(props) {
           child={
             <div>
               <CreateNewPromise
-                // promiseVal={promiseVal}
-                // setPromiseVal={setPromiseVal}
+                promiseVal={promiseVal}
                 setPromiseVal={setPromiseVal}
               />
             </div>
@@ -54,10 +56,11 @@ export default function AdminPromisesPage(props) {
   );
 }
 
-function CreateNewPromise({ setPromiseVal }) {
+function CreateNewPromise({ promiseVal, setPromiseVal }) {
   const router = useRouter();
   const { username } = useContext(UserContext);
   const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   // Ensure slug is URL safe
   const slug = encodeURI(kebabCase(title));
@@ -82,7 +85,7 @@ function CreateNewPromise({ setPromiseVal }) {
       uid,
       username,
       published: true,
-      content: "Das ist ein Test",
+      content: content ?? "TestContent",
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
       heartCount: 0,
@@ -97,18 +100,33 @@ function CreateNewPromise({ setPromiseVal }) {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-col">
       <div className="flex-grow mr-4">
-        <form onSubmit={createPromise}>
+        <form
+          onSubmit={createPromise}
+          className="grid md:grid-cols-2 grid-cols-1"
+        >
+          <div className="md:mr-4">
+            <input
+              // onChange={(e) => setCreator(e.target.value.toLowerCase())}
+              className="mt-4 rounded-lg"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                setPromiseVal({ ...promiseVal, title: e.target.value });
+              }}
+              placeholder="Promise Title"
+            />
+          </div>
           <input
             // onChange={(e) => setCreator(e.target.value.toLowerCase())}
             className="mt-4 rounded-lg"
-            value={title}
+            value={content}
             onChange={(e) => {
-              setTitle(e.target.value);
-              setPromiseVal({ title: e.target.value });
+              setContent(e.target.value);
+              setPromiseVal({ ...promiseVal, content: e.target.value });
             }}
-            placeholder="Promise Title"
+            placeholder="Promise Content"
           />
           <input type="submit" hidden />
         </form>
