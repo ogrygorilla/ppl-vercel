@@ -100,19 +100,24 @@ function CreateNewPromise({ promiseVal, setPromiseVal }) {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-col">
       <div className="flex-grow mr-4">
-        <form onSubmit={createPromise}>
-          <input
-            // onChange={(e) => setCreator(e.target.value.toLowerCase())}
-            className="mt-4 rounded-lg"
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-              setPromiseVal({ ...promiseVal, title: e.target.value });
-            }}
-            placeholder="Promise Title"
-          />
+        <form
+          onSubmit={createPromise}
+          className="grid md:grid-cols-2 grid-cols-1"
+        >
+          <div className="md:mr-4">
+            <input
+              // onChange={(e) => setCreator(e.target.value.toLowerCase())}
+              className="mt-4 rounded-lg"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                setPromiseVal({ ...promiseVal, title: e.target.value });
+              }}
+              placeholder="Promise Title"
+            />
+          </div>
           <input
             // onChange={(e) => setCreator(e.target.value.toLowerCase())}
             className="mt-4 rounded-lg"
