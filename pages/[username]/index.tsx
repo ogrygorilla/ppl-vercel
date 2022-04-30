@@ -101,13 +101,15 @@ export default function UserProfilePage({ user, promises }) {
     //       setLoading(false);
     //     });
     // }
+    setLoading(false);
   }, [data]);
 
   if (isLoading) return <p>Loading...</p>;
-  if (!data || !moreData) return <p>No profile data</p>;
+  // if (!data || !moreData) return <p>No profile data</p>;
+  if (!data) return <p>No profile data</p>;
 
   const userData = data.data[0];
-  const moreUserData = moreData.data[0];
+  // const moreUserData = moreData.data[0];
   //twitch api ende
 
   return (
