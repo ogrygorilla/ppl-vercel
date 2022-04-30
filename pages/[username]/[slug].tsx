@@ -26,6 +26,9 @@ export async function getStaticProps({ params }) {
     path = promiseRef.path;
   }
 
+  promise = !!promise ? promise : null;
+  path = !!path ? path : null;
+
   return {
     props: { promise, path },
     revalidate: 5000,

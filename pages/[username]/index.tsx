@@ -40,7 +40,7 @@ import { useRouter } from "next/router";
 // }
 
 //todo complete this function
-export async function getServerSideProps({ query }) {
+export async function getInitialProps({ query }) {
   const { username } = query;
 
   let user = null;

@@ -16,7 +16,7 @@ import Link from "next/link";
 const LIMIT = 3;
 
 //Immer aktueller Inhalt, viele Abfragen
-export async function getServerSideProps(context) {
+export async function getInitialProps(context) {
   const promiseQuery = firestore
     .collectionGroup("promises")
     .where("published", "==", true)
