@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import Link from "next/link";
+
 import { UserContext } from "../lib/context";
 import { firestore } from "../lib/firebase";
 import Loader from "./Loader";

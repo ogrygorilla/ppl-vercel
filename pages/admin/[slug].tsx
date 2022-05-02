@@ -2,12 +2,18 @@ import { collection, serverTimestamp } from "firebase/firestore";
 import { useCollectionDataOnce } from "react-firehooks";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 import { auth, firestore } from "../../lib/firebase";
 import AuthCheck from "../../components/AuthCheck";
 import Layout from "../../components/Layout";
-import { useRouter } from "next/router";
 
+/**
+ * Here the streamer will edit his promise
+ * Only allowed when logged in and admin
+ * @param props
+ * @returns
+ */
 export default function AdminPromiseEdit(props) {
   return (
     <AuthCheck>
@@ -22,6 +28,7 @@ function PromiseManager() {
   const router = useRouter();
   const { slug } = router.query;
 
+  //todo look into [username]/[slug] for fetching of promise?
   const promiseRef = firestore
     .collection("users")
     .doc(auth.currentUser.uid)
@@ -43,22 +50,8 @@ function PromiseManager() {
             <h1>{promise[0].title}</h1>
             <p>ID: {promise[0].slug}</p>
 
-            <PromiseForm
-              promiseRef={promiseRef}
-              defaultValues={promise[0]}
-              // preview={undefined} // preview={preview}
-            />
+            <PromiseForm promiseRef={promiseRef} defaultValues={promise[0]} />
           </section>
-
-          {/* <aside>
-            <h3>Tools</h3>
-            <button onClick={() => setPreview(!preview)}>
-              {preview ? "Edit" : "Preview"}
-            </button>
-            <Link href={`/${post.username}/${post.slug}`}>
-              <button className="btn-blue">Live view</button>
-            </Link>
-          </aside> */}
         </>
       )}
     </main>
@@ -94,11 +87,11 @@ function PromiseForm({ defaultValues, promiseRef }) {
     router.push(`/`);
   };
 
+  //todo can be the same component like the admin/index (create promise page?)
   return (
     <>
       <form onSubmit={handleSubmit(updatePromise)}>
         <div>
-          {/* <textarea name="content" ref={register}></textarea> */}
           <input
             {...register("content")}
             placeholder="Description"

@@ -1,44 +1,40 @@
-// import styles from "../../styles/Admin.module.css";
-import AuthCheck from "../../components/AuthCheck";
-import PostFeed from "../../components/PromiseFeed";
-import { UserContext } from "../../lib/context";
-import { firestore, auth, serverTimestamp } from "../../lib/firebase";
-
 import { useContext, useState } from "react";
 import { useRouter } from "next/router";
-
 import kebabCase from "lodash.kebabcase";
 import toast from "react-hot-toast";
-import { useDocumentData } from "react-firebase-hooks/firestore";
 
+import AuthCheck from "../../components/AuthCheck";
+import { UserContext } from "../../lib/context";
+import { firestore, auth, serverTimestamp } from "../../lib/firebase";
 import Layout from "../../components/Layout";
 import Hero from "../../components/Hero";
 import PromiseCard from "../../components/PromiseCard";
 
+/**
+ * This is the Admin Page to Create a Promise
+ * Only allowed when user has a admin prop
+ * @param props
+ * @returns
+ */
 export default function AdminPromisesPage(props) {
   const { username } = useContext(UserContext);
 
+  /**
+   * For creating a new Promise these are the default fields
+   * Passed to CreateNewPromise Component afterwards
+   */
   const [promiseVal, setPromiseVal] = useState({
     title: "Test",
     content: "Das ist ein Beschreibung",
     username: username,
-    //username: "streamer",
     price: 10,
   });
-  // const [step, setstep] = useState(0);
-
-  // const steps = ["Title", "Description", "Price"];
-  //const [template, settemplate] = useState(true);
-
-  // const title = template ? "Be quick with a template from below" : "Title";
-  // const btnTitle = template ? "or Start from scratch" : "Go back";
 
   return (
     <AuthCheck>
       <Layout title={"Admin"}>
         <Hero
           title={"Create Promise"}
-          starter={false}
           child={
             <div>
               <CreateNewPromise
@@ -108,7 +104,6 @@ function CreateNewPromise({ promiseVal, setPromiseVal }) {
         >
           <div className="md:mr-4">
             <input
-              // onChange={(e) => setCreator(e.target.value.toLowerCase())}
               className="mt-4 rounded-lg"
               value={title}
               onChange={(e) => {
@@ -119,7 +114,6 @@ function CreateNewPromise({ promiseVal, setPromiseVal }) {
             />
           </div>
           <input
-            // onChange={(e) => setCreator(e.target.value.toLowerCase())}
             className="mt-4 rounded-lg"
             value={content}
             onChange={(e) => {
@@ -141,23 +135,5 @@ function CreateNewPromise({ promiseVal, setPromiseVal }) {
         </button>
       </div>
     </div>
-    // <form onSubmit={createPromise}>
-    //   <input
-    //     value={title}
-    //     onChange={(e) => {
-    //       setTitle(e.target.value);
-    //       setPromiseVal({ title: e.target.value });
-    //     }}
-    //     placeholder="Promise Title"
-    //     // className={styles.input}
-    //   />
-    //   <button
-    //     type="submit"
-    //     disabled={!isValid}
-    //     className="rounded-lg bg-yellow-400 p-4 py-2 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:shadow-xl sm:py-3 sm:px-8 mt-2"
-    //   >
-    //     Create New Promise
-    //   </button>
-    // </form>
   );
 }

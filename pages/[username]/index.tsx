@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { getUserWithUsername, promiseToJSON } from "../../lib/firebase";
+import { useRouter } from "next/router";
+
 import UserProfile from "../../components/UserProfile";
 import Layout from "../../components/Layout";
 import Hero from "../../components/Hero";
 import PromiseFeed from "../../components/PromiseFeed";
-import { useRouter } from "next/router";
 
-//Server side rendering
-//Zu jeder Zeit wenn diese Seite angefragt wird, wird eine Anfrage an den Server geschickt
+/**
+ * Essentially the Profile of the user (ssr)
+ * @param query  gets the username from the url
+ * @returns props (user, promises) All Promises of the user
+ */
 // export async function getServerSideProps({ query }) {
 //   const { username } = query;
 
@@ -39,27 +42,6 @@ import { useRouter } from "next/router";
 //   };
 // }
 
-//todo complete this function
-export async function getServerSideProps({ query }) {
-  const { username } = query;
-
-  let user = null;
-  // fetch(`https://api.twitch.tv/helix/users/?login=${username}`, {
-  //   headers: {
-  //     Authorization: "Bearer 05g9fpizwuyulw71p7mzx3jlezn30n",
-  //     "Client-Id": "u6u44epveer081p4xte3h4q2tuifcl",
-  //   },
-  // })
-  //   .then((res) => res.json())
-  //   .then((data) => {
-  //     user = data;
-  //   });
-
-  return {
-    props: { user }, // will be passed to the page component as props
-  };
-}
-
 export default function UserProfilePage({ user, promises }) {
   //Twitch Api Anfang (clr)
   const [data, setData] = useState(null);
@@ -78,6 +60,10 @@ export default function UserProfilePage({ user, promises }) {
     });
   };
 
+  /**
+   * Runs only once and gets the streamer data from the twitch api
+   * Should be in getServerSideProps?
+   */
   useEffect(() => {
     setLoading(true);
 
@@ -101,12 +87,13 @@ export default function UserProfilePage({ user, promises }) {
     //       setLoading(false);
     //     });
     // }
+
     setLoading(false);
   }, [data]);
 
   if (isLoading) return <p>Loading...</p>;
-  // if (!data || !moreData) return <p>No profile data</p>;
   if (!data) return <p>No profile data</p>;
+  // if (!data || !moreData) return <p>No profile data</p>;
 
   const userData = data.data[0];
   // const moreUserData = moreData.data[0];
@@ -114,17 +101,16 @@ export default function UserProfilePage({ user, promises }) {
 
   return (
     <Layout title={"Profile"}>
-      <Hero title={"Profile"} starter={false} child={undefined} />
+      <Hero title={"Profile"} child={undefined} />
       <UserProfile userImg={userData.profile_image_url} />
+      {/* TODO Rewrite UserProfile Component */}
       <main>
         <div className="mt-16 mb-8 text-center">
           <p>
             <i>@{userData.display_name}</i>
           </p>
-          {/* <h1>{user.displayName || "Anonymous User"}</h1> */}
           <p className="mt-4">{userData.description}</p>
           <p className="mt-4">Typ: {userData.broadcaster_type}</p>
-          {/* <p>Sprache: {moreUserData.language}</p> */}
         </div>
         <hr />
         <h1 className="m-8 text-2xl sm:text-4xl text-center">
