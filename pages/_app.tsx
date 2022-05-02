@@ -1,6 +1,8 @@
+//external libs
 import { Toaster } from "react-hot-toast";
+
+//our files
 import "../styles/globals.css";
-import Layout from "../components/Layout";
 import { UserContext } from "../lib/context";
 import { useUserData } from "../lib/hooks";
 

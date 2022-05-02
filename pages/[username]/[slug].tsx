@@ -1,17 +1,17 @@
-// import styles from "../../styles/Post.module.css";
-// import PostContent from "../../components/PostContent";
 import {
   firestore,
   getUserWithUsername,
   promiseToJSON,
 } from "../../lib/firebase";
-import { useDocumentData } from "react-firebase-hooks/firestore";
-import Link from "next/link";
-import AuthCheck from "../../components/AuthCheck";
-import HeartButton from "../../components/HeartButton";
 import PromiseCard from "../../components/PromiseCard";
-import PromiseFeed from "../../components/PromiseFeed";
 
+//todo whats the use of this page?
+
+/**
+ *
+ * @param param0 {username and slug} get extracted from the url
+ * @returns
+ */
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
   const userDoc = await getUserWithUsername(username);
@@ -20,6 +20,7 @@ export async function getStaticProps({ params }) {
   let path;
 
   if (userDoc) {
+    //get the promise with /username/slug
     const promiseRef = userDoc.ref.collection("promises").doc(slug);
     promise = promiseToJSON(await promiseRef.get());
 
@@ -28,10 +29,15 @@ export async function getStaticProps({ params }) {
 
   return {
     props: { promise, path },
+    //reload the promise after x Duration for updates
     revalidate: 5000,
   };
 }
 
+/**
+ *
+ * @returns params {username, slug} for the getStaticProps function
+ */
 export async function getStaticPaths() {
   // Improve my using Admin SDK to select empty docs
   const snapshot = await firestore.collectionGroup("promises").get();
@@ -64,32 +70,11 @@ export default function Promise(props) {
       {promise && (
         <main>
           <section>
-            <PromiseFeed promises={[promise]} admin />
+            {/* Show promise loaded from firestore */}
+            <PromiseCard content={promise} disabled={promise == null} />
           </section>
         </main>
       )}
     </>
-  );
-}
-
-function PromiseContent({ promise }) {
-  const createdAt =
-    typeof promise?.createdAt === "number"
-      ? new Date(promise.createdAt)
-      : promise.createdAt.toDate();
-
-  return (
-    <div className="card">
-      <h1>{promise?.title}</h1>
-      <span className="text-sm">
-        Written by{" "}
-        <Link href={`/${promise.username}/`}>
-          <a className="text-info">@{promise.username}</a>
-        </Link>{" "}
-        on {createdAt.toISOString()}
-      </span>
-      <p>{promise?.content}</p>
-      {/* <ReactMarkdown>{promise?.content}</ReactMarkdown> */}
-    </div>
   );
 }
