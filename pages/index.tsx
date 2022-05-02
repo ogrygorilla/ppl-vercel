@@ -118,8 +118,6 @@ export default function Home(props) {
           />
         }
       />
-      {/* //*Partner and Popular Promise Section */}
-      <PartnerAndPromiseSection />
       {/* //*Promise Feed - Render Promise Cards */}
       <main>
         <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
