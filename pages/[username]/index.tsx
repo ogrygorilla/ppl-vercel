@@ -42,6 +42,27 @@ import PromiseFeed from "../../components/PromiseFeed";
 //   };
 // }
 
+//todo complete this function
+export async function getInitialProps({ query }) {
+  const { username } = query;
+
+  let user = null;
+  // fetch(`https://api.twitch.tv/helix/users/?login=${username}`, {
+  //   headers: {
+  //     Authorization: "Bearer 05g9fpizwuyulw71p7mzx3jlezn30n",
+  //     "Client-Id": "u6u44epveer081p4xte3h4q2tuifcl",
+  //   },
+  // })
+  //   .then((res) => res.json())
+  //   .then((data) => {
+  //     user = data;
+  //   });
+
+  return {
+    props: { user }, // will be passed to the page component as props
+  };
+}
+
 export default function UserProfilePage({ user, promises }) {
   //Twitch Api Anfang (clr)
   const [data, setData] = useState(null);

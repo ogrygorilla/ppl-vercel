@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "populend-increment",
+    "public": "out",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

@@ -11,8 +11,8 @@ import TextFormField from "../components/TextFormField";
 // Max promise to query per page
 const LIMIT = 3;
 
-//Immer aktueller Inhalt, viele Abfragen (ssr)
-export async function getServerSideProps(context) {
+//Immer aktueller Inhalt, viele Abfragen
+export async function getInitialProps(context) {
   const promiseQuery = firestore
     .collectionGroup("promises")
     .where("published", "==", true)
