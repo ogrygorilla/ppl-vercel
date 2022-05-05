@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { auth, firestore } from "../../lib/firebase";
 import AuthCheck from "../../components/AuthCheck";
 import Layout from "../../components/Layout";
+import TailwindNavbar from "../../components/TailwindNavbar";
 
 /**
  * Here the streamer will edit his promise
@@ -17,9 +18,11 @@ import Layout from "../../components/Layout";
 export default function AdminPromiseEdit(props) {
   return (
     <AuthCheck>
-      <Layout title={undefined}>
+      {/* <Layout title={undefined}>
         <PromiseManager />
-      </Layout>
+      </Layout> */}
+      <TailwindNavbar />
+      <PromiseManager />
     </AuthCheck>
   );
 }

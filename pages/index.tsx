@@ -7,6 +7,12 @@ import Layout from "../components/Layout";
 import Hero from "../components/Hero";
 import PromiseFeed from "../components/PromiseFeed";
 import TextFormField from "../components/TextFormField";
+import TailwindNavbar from "../components/TailwindNavbar";
+import TailwindHeader from "../components/TailwindHeader";
+import TailwindDivider from "../components/TailwindDivider";
+import TailwindSection from "../components/TailwindSection";
+import TailwindGridList from "../components/TailwindGridList";
+import TailwindFooter from "../components/TailwindFooter";
 
 // Max promise to query per page
 const LIMIT = 3;
@@ -35,7 +41,6 @@ export default function Home(props) {
   const [promises, setPromises] = useState(props.promises);
   const [loading, setLoading] = useState(false);
   const [promiseEnd, setpromiseEnd] = useState(false);
-  const [creator, setCreator] = useState("");
   const [isValid, setIsValid] = useState(false);
   const router = useRouter();
 
@@ -84,56 +89,52 @@ export default function Home(props) {
   //   []
   // );
 
-  const preventDefault = (f) => (e) => {
-    e.preventDefault();
-    f(e);
-  };
-
-  /**
-   * Search for a creator and go the streamers profile
-   */
-  const handleSubmit = preventDefault(() => {
-    // checkUsername(creator);
-    const path = "/" + creator;
-    // if (isValid) {
-    router.push({
-      pathname: path,
-      //query: { q: query },
-    });
-    // }
-    //
-  });
-
   return (
-    <Layout title={"Home"}>
-      {/* Hero Section with Search */}
-      <Hero
-        title={"Suche einen Content Creator"}
-        child={
-          //* TextFormField Component - Search Creators
-          <TextFormField
-            handleSubmit={handleSubmit}
-            linkTo={creator}
-            setX={setCreator}
-          />
-        }
+    <div>
+      <TailwindNavbar />
+      <TailwindHeader
+        sectionName="Populend"
+        title="Gutscheine deiner Creator"
+        subtitle="Komme deinen Lieblings-Creatorn noch näher und helfe ihnen, weiter
+        zu wachsen."
+        button={true}
       />
-      {/* //*Promise Feed - Render Promise Cards */}
-      <main>
-        <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
-          Top Promises
-        </h1>
-        <PromiseFeed promises={promises} admin={undefined} />
+      {/* <TailwindDivider /> */}
+      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <TailwindGridList />
+      </div>
+      <TailwindSection />
+      <TailwindFooter />
+    </div>
+    // <Layout title={"Home"}>
+    //   {/* Hero Section with Search */}
+    //   <Hero
+    //     title={"Suche einen Content Creator"}
+    //     child={
+    //       //* TextFormField Component - Search Creators
+    //       <TextFormField
+    //         handleSubmit={handleSubmit}
+    //         linkTo={creator}
+    //         setX={setCreator}
+    //       />
+    //     }
+    //   />
+    //   {/* //*Promise Feed - Render Promise Cards */}
+    //   <main>
+    //     <h1 className="mb-4 mt-8 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-5xl">
+    //       Top Promises
+    //     </h1>
+    //     <PromiseFeed promises={promises} admin={undefined} />
 
-        {!loading && !promiseEnd && (
-          <button onClick={getMorePromises}>Load more</button>
-        )}
+    //     {!loading && !promiseEnd && (
+    //       <button onClick={getMorePromises}>Load more</button>
+    //     )}
 
-        <Loader show={loading} />
+    //     <Loader show={loading} />
 
-        {promiseEnd && "You have reached the end!"}
-      </main>
-    </Layout>
+    //     {promiseEnd && "You have reached the end!"}
+    //   </main>
+    // </Layout>
   );
 }
 

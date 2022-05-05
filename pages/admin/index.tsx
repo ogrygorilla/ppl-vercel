@@ -9,6 +9,11 @@ import { firestore, auth, serverTimestamp } from "../../lib/firebase";
 import Layout from "../../components/Layout";
 import Hero from "../../components/Hero";
 import PromiseCard from "../../components/PromiseCard";
+import TailwindNavbar from "../../components/TailwindNavbar";
+import TailwindHeader from "../../components/TailwindHeader";
+import TailwindInputField from "../../components/TailwindInputField";
+import TailwindInputArea from "../../components/TailwindInputArea";
+import TailwindPromiseCard from "../../components/TailwindPromiseCard";
 
 /**
  * This is the Admin Page to Create a Promise
@@ -32,7 +37,33 @@ export default function AdminPromisesPage(props) {
 
   return (
     <AuthCheck>
-      <Layout title={"Admin"}>
+      <div>
+        <TailwindNavbar />
+        <TailwindHeader
+          sectionName="Admin"
+          title="Gutschein erstellen"
+          subtitle="Erstelle einen Gutschein für deine Fans"
+          button={undefined}
+        />
+        {/* <div className="text-center">
+          <h2 className="text-base font-semibold text-indigo-600 tracking-wide uppercase mb-3">
+            Erstellen
+          </h2>
+        </div> */}
+        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-row align-middle justify-center">
+          <div className="">
+            <TailwindInputField />
+            <TailwindInputArea />
+          </div>
+          <div className="w-16"></div>
+          <TailwindPromiseCard />
+          {/* <div className="bg-white overflow-hidden shadow rounded-lg">
+            <div className="px-4 py-5 sm:p-6 flex flex-col">
+            </div>
+          </div> */}
+        </div>
+      </div>
+      {/* <Layout title={"Admin"}>
         <Hero
           title={"Create Promise"}
           child={
@@ -47,7 +78,7 @@ export default function AdminPromisesPage(props) {
         <div className="flex justify-center">
           <PromiseCard content={promiseVal} disabled={true} />
         </div>
-      </Layout>
+      </Layout> */}
     </AuthCheck>
   );
 }

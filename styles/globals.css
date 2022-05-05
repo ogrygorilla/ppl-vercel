@@ -6,7 +6,7 @@
 :root {
   --color-bg: #ffffff;
   --color-text: #08090a;
-  --color-blue: #3b49df;
+  --color-blue: rgb(79 70 229 / var(--tw-text-opacity));
   --color-red: #df3b3b;
   --color-green: #3bdf72;
   --color-gray: #b5bdc4;

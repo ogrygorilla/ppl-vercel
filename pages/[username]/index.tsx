@@ -5,6 +5,10 @@ import UserProfile from "../../components/UserProfile";
 import Layout from "../../components/Layout";
 import Hero from "../../components/Hero";
 import PromiseFeed from "../../components/PromiseFeed";
+import TailwindNavbar from "../../components/TailwindNavbar";
+import TailwindHeader from "../../components/TailwindHeader";
+import TailwindGridList from "../../components/TailwindGridList";
+import TailwindFooter from "../../components/TailwindFooter";
 
 /**
  * Essentially the Profile of the user (ssr)
@@ -121,24 +125,43 @@ export default function UserProfilePage({ user, promises }) {
   //twitch api ende
 
   return (
-    <Layout title={"Profile"}>
-      <Hero title={"Profile"} child={undefined} />
-      <UserProfile userImg={userData.profile_image_url} />
-      {/* TODO Rewrite UserProfile Component */}
-      <main>
-        <div className="mt-16 mb-8 text-center">
-          <p>
-            <i>@{userData.display_name}</i>
-          </p>
-          <p className="mt-4">{userData.description}</p>
-          <p className="mt-4">Typ: {userData.broadcaster_type}</p>
+    <div>
+      <TailwindNavbar />
+      {/* Costumize the header */}
+      <TailwindHeader
+        sectionName="Profile"
+        title={userData.display_name}
+        subtitle={userData.description}
+        button={false}
+      />
+      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-16">
+        <div className="text-center">
+          <h2 className="text-base font-semibold text-indigo-600 tracking-wide uppercase mb-3">
+            Gutscheine
+          </h2>
         </div>
-        <hr />
-        <h1 className="m-8 text-2xl sm:text-4xl text-center">
-          Wähle einen Gutschein aus
-        </h1>
-        <PromiseFeed promises={promises} admin={true} />
-      </main>
-    </Layout>
+        <TailwindGridList />
+      </div>
+      <TailwindFooter />
+    </div>
+    // <Layout title={"Profile"}>
+    //   <Hero title={"Profile"} child={undefined} />
+    //   <UserProfile userImg={userData.profile_image_url} />
+    //   {/* TODO Rewrite UserProfile Component */}
+    //   <main>
+    //     <div className="mt-16 mb-8 text-center">
+    //       <p>
+    //         <i>@{userData.display_name}</i>
+    //       </p>
+    //       <p className="mt-4">{userData.description}</p>
+    //       <p className="mt-4">Typ: {userData.broadcaster_type}</p>
+    //     </div>
+    //     <hr />
+    //     <h1 className="m-8 text-2xl sm:text-4xl text-center">
+    //       Wähle einen Gutschein aus
+    //     </h1>
+    //     <PromiseFeed promises={promises} admin={true} />
+    //   </main>
+    // </Layout>
   );
 }

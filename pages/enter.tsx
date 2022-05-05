@@ -4,6 +4,8 @@ import debounce from "lodash.debounce";
 import { auth, firestore, githubAuthProvider } from "../lib/firebase";
 import { UserContext } from "../lib/context";
 import Layout from "../components/Layout";
+import TailwindNavbar from "../components/TailwindNavbar";
+import TailwindHeader from "../components/TailwindHeader";
 
 /**
  *
@@ -17,9 +19,14 @@ export default function Enter(props) {
   // 2. user signed in, but missing username <UsernameForm />
   // 3. user signed in, has username <SignOutButton />
   return (
-    <Layout title={"Enter"}>
-      <main className="mt-40">
-        {/* <Metatags title="Enter" description="Sign up for this amazing app!" /> */}
+    <div>
+      <TailwindNavbar />
+      <TailwindHeader
+        sectionName="Einstellungen"
+        title="Deine Einstellungen"
+        subtitle="Was möchtest du anpassen?"
+      />
+      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
         {user ? (
           !username ? (
             <UsernameForm />
@@ -29,8 +36,22 @@ export default function Enter(props) {
         ) : (
           <SignInButton />
         )}
-      </main>
-    </Layout>
+      </div>
+    </div>
+    // <Layout title={"Enter"}>
+    //   <main className="mt-40">
+    //     {/* <Metatags title="Enter" description="Sign up for this amazing app!" /> */}
+    //     {user ? (
+    //       !username ? (
+    //         <UsernameForm />
+    //       ) : (
+    //         <SignOutButton />
+    //       )
+    //     ) : (
+    //       <SignInButton />
+    //     )}
+    //   </main>
+    // </Layout>
   );
 }
 
@@ -41,15 +62,31 @@ function SignInButton() {
   };
 
   return (
-    <button className="btn-google" onClick={signInWithGithub}>
-      <img src={"/google.png"} width="30px" /> Sign in with Github
+    <button
+      type="button"
+      className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      onClick={signInWithGithub}
+    >
+      Mit Github anmelden
     </button>
+    // <button className="btn-google" onClick={signInWithGithub}>
+    //   <img src={"/google.png"} width="30px" /> Sign in with Github
+    // </button>
   );
 }
 
 // Sign out button
 function SignOutButton() {
-  return <button onClick={() => auth.signOut()}>Sign Out</button>;
+  return (
+    <button
+      type="button"
+      className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      onClick={() => auth.signOut()}
+    >
+      Ausloggen
+    </button>
+  );
+  // return <button onClick={() => auth.signOut()}>Sign Out</button>;
 }
 
 // Username form
