@@ -50,13 +50,22 @@ export default function AdminPromisesPage(props) {
             Erstellen
           </h2>
         </div> */}
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-row align-middle justify-center">
-          <div className="">
-            <TailwindInputField />
-            <TailwindInputArea />
+        <div className="max-w-7xl sm:px-6 lg:px-8 flex flex-col align-middle justify-center">
+          <div className="flex flex-row align-middle justify-center">
+            <div>
+              <TailwindInputField />
+              <TailwindInputArea />
+              <button
+                type="button"
+                className="m-auto mt-4 inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={() => {}}
+              >
+                Erstellen
+              </button>
+            </div>
+            <div className="w-16"></div>
+            <TailwindPromiseCard />
           </div>
-          <div className="w-16"></div>
-          <TailwindPromiseCard />
           {/* <div className="bg-white overflow-hidden shadow rounded-lg">
             <div className="px-4 py-5 sm:p-6 flex flex-col">
             </div>
