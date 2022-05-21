@@ -1,9 +1,13 @@
 import { useEffect, useState, useCallback, useContext } from "react";
 import debounce from "lodash.debounce";
 
-import { auth, firestore, githubAuthProvider } from "../lib/firebase";
+import {
+  auth,
+  firestore,
+  githubAuthProvider,
+  googleAuthProvider,
+} from "../lib/firebase";
 import { UserContext } from "../lib/context";
-import Layout from "../components/Layout";
 import TailwindNavbar from "../components/TailwindNavbar";
 import TailwindHeader from "../components/TailwindHeader";
 
@@ -34,7 +38,7 @@ export default function Enter(props) {
             <SignOutButton />
           )
         ) : (
-          <SignInButton />
+          <SignInButtons />
         )}
       </div>
     </div>
@@ -56,22 +60,32 @@ export default function Enter(props) {
 }
 
 // Sign in with Google button
-function SignInButton() {
+function SignInButtons() {
   const signInWithGithub = async () => {
     await auth.signInWithPopup(githubAuthProvider);
   };
 
+  const signInWithGoogle = async () => {
+    await auth.signInWithPopup(googleAuthProvider);
+  };
+
   return (
-    <button
-      type="button"
-      className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      onClick={signInWithGithub}
-    >
-      Mit Github anmelden
-    </button>
-    // <button className="btn-google" onClick={signInWithGithub}>
-    //   <img src={"/google.png"} width="30px" /> Sign in with Github
-    // </button>
+    <div>
+      <button
+        type="button"
+        className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        onClick={signInWithGoogle}
+      >
+        Mit Google anmelden
+      </button>
+      <button
+        type="button"
+        className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        onClick={signInWithGithub}
+      >
+        Mit Github anmelden
+      </button>
+    </div>
   );
 }
 
