@@ -57,7 +57,7 @@ export default function Example() {
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
-        <>
+        <div>
           <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
               <div className="flex items-center px-2 lg:px-0">
@@ -159,7 +159,7 @@ export default function Example() {
                   {/* Profile dropdown */}
                   <Menu as="div" className="ml-4 relative flex-shrink-0">
                     <div>
-                      {user ? (
+                      {user && username ? (
                         <Menu.Button className="bg-gray-800 rounded-full flex text-sm text-white focus:outline-none focus:ring-offset-2 focus:ring-offset-gray-800 ">
                           <span className="sr-only">Open user menu</span>
                           <img
@@ -169,7 +169,8 @@ export default function Example() {
                           />
                         </Menu.Button>
                       ) : (
-                        <Menu.Button>
+                        // <Menu.Button>
+                        <div>
                           <button
                             type="button"
                             className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -181,7 +182,8 @@ export default function Example() {
                           >
                             Einloggen
                           </button>
-                        </Menu.Button>
+                        </div>
+                        // </Menu.Button>
                       )}
                     </div>
                     <Transition
@@ -270,8 +272,8 @@ export default function Example() {
               </Disclosure.Button>
             </div>
             <div className="pt-4 pb-3 border-t border-gray-700">
-              {user ? (
-                <>
+              {user && username ? (
+                <div>
                   <div className="flex items-center px-5">
                     <div className="flex-shrink-0">
                       <img
@@ -320,7 +322,7 @@ export default function Example() {
                       Einstellungen
                     </Disclosure.Button>
                   </div>
-                </>
+                </div>
               ) : (
                 <button
                   type="button"
@@ -336,7 +338,7 @@ export default function Example() {
               )}
             </div>
           </Disclosure.Panel>
-        </>
+        </div>
       )}
     </Disclosure>
   );

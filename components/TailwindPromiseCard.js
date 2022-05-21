@@ -1,7 +1,7 @@
 import { BookmarkIcon, HandIcon } from "@heroicons/react/solid";
 
 export default function TrailwindPromiseCard() {
-  const person = {
+  const promise = {
     name: "@streamer",
     title: "Titel",
     role: "Kategorie",
@@ -13,19 +13,19 @@ export default function TrailwindPromiseCard() {
       <div className="flex-1 flex flex-col p-8">
         <img
           className="w-32 h-32 flex-shrink-0 mx-auto rounded-full"
-          src={person.imageUrl}
+          src={promise.imageUrl}
           alt=""
         />
         <h3 className="mt-6 text-gray-900 text-sm font-medium">
-          {person.name}
+          {promise.name}
         </h3>
         <dl className="mt-1 flex-grow flex flex-col justify-between">
           <dt className="sr-only">Title</dt>
-          <dd className="text-gray-500 text-sm">{person.title}</dd>
+          <dd className="text-gray-500 text-sm">{promise.title}</dd>
           <dt className="sr-only">Role</dt>
           <dd className="mt-3">
             <span className="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">
-              {person.role}
+              {promise.role}
             </span>
           </dd>
         </dl>

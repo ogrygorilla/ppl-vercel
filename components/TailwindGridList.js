@@ -7,7 +7,7 @@ import {
   SaveIcon,
 } from "@heroicons/react/solid";
 
-const people = [
+const promises = [
   {
     name: "fettarmqp",
     title: "Discord Talk",
@@ -29,7 +29,7 @@ const people = [
     imageUrl:
       "https://images.unsplash.com/photo-1617096200347-cb04ae810b1d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
   },
-  // More people...
+  // More promises...
 ];
 
 export default function Example() {
@@ -38,7 +38,7 @@ export default function Example() {
       role="list"
       className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3"
     >
-      {people.map((person, idx) => (
+      {promises.map((promise, idx) => (
         <li
           key={idx}
           className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"
@@ -46,19 +46,19 @@ export default function Example() {
           <div className="flex-1 flex flex-col p-8">
             <img
               className="w-32 h-32 flex-shrink-0 mx-auto rounded-full"
-              src={person.imageUrl}
+              src={promise.imageUrl}
               alt=""
             />
             <h3 className="mt-6 text-gray-900 text-sm font-medium">
-              {person.name}
+              {promise.name}
             </h3>
             <dl className="mt-1 flex-grow flex flex-col justify-between">
               <dt className="sr-only">Title</dt>
-              <dd className="text-gray-500 text-sm">{person.title}</dd>
+              <dd className="text-gray-500 text-sm">{promise.title}</dd>
               <dt className="sr-only">Role</dt>
               <dd className="mt-3">
                 <span className="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">
-                  {person.role}
+                  {promise.role}
                 </span>
               </dd>
             </dl>

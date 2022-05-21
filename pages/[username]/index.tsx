@@ -9,42 +9,43 @@ import TailwindNavbar from "../../components/TailwindNavbar";
 import TailwindHeader from "../../components/TailwindHeader";
 import TailwindGridList from "../../components/TailwindGridList";
 import TailwindFooter from "../../components/TailwindFooter";
+import { getUserWithUsername, promiseToJSON } from "../../lib/firebase";
 
 /**
  * Essentially the Profile of the user (ssr)
  * @param query  gets the username from the url
  * @returns props (user, promises) All Promises of the user
  */
-// export async function getServerSideProps({ query }) {
-//   const { username } = query;
+export async function getServerSideProps({ query }) {
+  const { username } = query;
 
-//   const userDoc = await getUserWithUsername(username);
+  const userDoc = await getUserWithUsername(username);
 
-//   // If no user, short circuit to 404 page
-//   if (!userDoc) {
-//     return {
-//       notFound: true,
-//     };
-//   }
+  // If no user, short circuit to 404 page
+  if (!userDoc) {
+    return {
+      notFound: true,
+    };
+  }
 
-//   // JSON serializable data
-//   let user = null;
-//   let promises = null;
+  // JSON serializable data
+  let user = null;
+  let promises = null;
 
-//   if (userDoc) {
-//     user = userDoc.data();
-//     const promisesQuery = userDoc.ref
-//       .collection("promises")
-//       .where("published", "==", true)
-//       .orderBy("createdAt", "desc")
-//       .limit(5);
-//     promises = (await promisesQuery.get()).docs.map(promiseToJSON);
-//   }
+  if (userDoc) {
+    user = userDoc.data();
+    const promisesQuery = userDoc.ref
+      .collection("promises")
+      .where("published", "==", true)
+      .orderBy("createdAt", "desc")
+      .limit(5);
+    promises = (await promisesQuery.get()).docs.map(promiseToJSON);
+  }
 
-//   return {
-//     props: { user, promises }, // will be passed to the page component as props
-//   };
-// }
+  return {
+    props: { user, promises }, // will be passed to the page component as props
+  };
+}
 
 //todo complete this function
 export async function getInitialProps({ query }) {
@@ -129,7 +130,7 @@ export default function UserProfilePage({ user, promises }) {
       <TailwindNavbar />
       {/* Costumize the header */}
       <TailwindHeader
-        sectionName="Profile"
+        sectionName="Profil"
         title={userData.display_name}
         subtitle={userData.description}
         button={false}
