@@ -16,36 +16,36 @@ import { getUserWithUsername, promiseToJSON } from "../../lib/firebase";
  * @param query  gets the username from the url
  * @returns props (user, promises) All Promises of the user
  */
-export async function getServerSideProps({ query }) {
-  const { username } = query;
+// export async function getServerSideProps({ query }) {
+//   const { username } = query;
 
-  const userDoc = await getUserWithUsername(username);
+//   const userDoc = await getUserWithUsername(username);
 
-  // If no user, short circuit to 404 page
-  if (!userDoc) {
-    return {
-      notFound: true,
-    };
-  }
+//   // If no user, short circuit to 404 page
+//   if (!userDoc) {
+//     return {
+//       notFound: true,
+//     };
+//   }
 
-  // JSON serializable data
-  let user = null;
-  let promises = null;
+//   // JSON serializable data
+//   let user = null;
+//   let promises = null;
 
-  if (userDoc) {
-    user = userDoc.data();
-    const promisesQuery = userDoc.ref
-      .collection("promises")
-      .where("published", "==", true)
-      .orderBy("createdAt", "desc")
-      .limit(5);
-    promises = (await promisesQuery.get()).docs.map(promiseToJSON);
-  }
+//   if (userDoc) {
+//     user = userDoc.data();
+//     const promisesQuery = userDoc.ref
+//       .collection("promises")
+//       .where("published", "==", true)
+//       .orderBy("createdAt", "desc")
+//       .limit(5);
+//     promises = (await promisesQuery.get()).docs.map(promiseToJSON);
+//   }
 
-  return {
-    props: { user, promises }, // will be passed to the page component as props
-  };
-}
+//   return {
+//     props: { user, promises }, // will be passed to the page component as props
+//   };
+// }
 
 //todo complete this function
 export async function getInitialProps({ query }) {
@@ -117,13 +117,17 @@ export default function UserProfilePage({ user, promises }) {
     setLoading(false);
   }, [data]);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No profile data</p>;
-  // if (!data || !moreData) return <p>No profile data</p>;
+  if (isLoading || !data) return <p>Loading...</p>;
 
   const userData = data.data[0];
-  // const moreUserData = moreData.data[0];
-  //twitch api ende
+
+  let displayName = username;
+  let description = "Dieser User ist nicht auf twitch..";
+
+  if (userData) {
+    displayName = userData.display_name;
+    description = userData.description;
+  }
 
   return (
     <div>
@@ -131,8 +135,8 @@ export default function UserProfilePage({ user, promises }) {
       {/* Costumize the header */}
       <TailwindHeader
         sectionName="Profil"
-        title={userData.display_name}
-        subtitle={userData.description}
+        title={displayName}
+        subtitle={description}
         button={false}
       />
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-16">

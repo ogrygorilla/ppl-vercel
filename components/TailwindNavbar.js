@@ -278,16 +278,16 @@ export default function Example() {
                     <div className="flex-shrink-0">
                       <img
                         className="h-10 w-10 rounded-full"
-                        src={user.photoURL}
+                        src={user.photoURL ? user.photoURL : ''}
                         alt="userphoto"
                       />
                     </div>
                     <div className="ml-3">
                       <div className="text-base font-medium text-white">
-                        Tom Cook
+                        {user.displayName ? user.displayName : 'Your name should be here'}
                       </div>
                       <div className="text-sm font-medium text-gray-400">
-                        tom@example.com
+                      {user.email ? user.email : 'Your email should be here'}
                       </div>
                     </div>
                     <button

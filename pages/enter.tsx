@@ -10,6 +10,7 @@ import {
 import { UserContext } from "../lib/context";
 import TailwindNavbar from "../components/TailwindNavbar";
 import TailwindHeader from "../components/TailwindHeader";
+import "firebase/compat/auth";
 
 /**
  *
@@ -69,22 +70,33 @@ function SignInButtons() {
     await auth.signInWithPopup(googleAuthProvider);
   };
 
+  const signInWithEmailAndPassword = async () => {
+    await auth.signInWithPopup(googleAuthProvider);
+  };
+
   return (
-    <div>
+    <div className="m-auto">
       <button
+        type="button"
+        className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        onClick={signInWithEmailAndPassword}
+      >
+        Sign in with Google
+      </button>
+      {/* <button
         type="button"
         className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         onClick={signInWithGoogle}
       >
         Mit Google anmelden
-      </button>
-      <button
+      </button> */}
+      {/* <button
         type="button"
         className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         onClick={signInWithGithub}
       >
         Mit Github anmelden
-      </button>
+      </button> */}
     </div>
   );
 }
@@ -92,7 +104,7 @@ function SignInButtons() {
 // Sign out button
 function SignOutButton() {
   return (
-    <div>
+    <div className="m-auto">
       <button
         type="button"
         className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
