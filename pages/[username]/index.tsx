@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
-import { getUserWithUsername, promiseToJSON } from "../../lib/firebase";
+import { useRouter } from "next/router";
+
 import UserProfile from "../../components/UserProfile";
 import Layout from "../../components/Layout";
 import Hero from "../../components/Hero";
 import PromiseFeed from "../../components/PromiseFeed";
-import { useRouter } from "next/router";
+import TailwindNavbar from "../../components/TailwindNavbar";
+import TailwindHeader from "../../components/TailwindHeader";
+import TailwindGridList from "../../components/TailwindGridList";
+import TailwindFooter from "../../components/TailwindFooter";
+import { getUserWithUsername, promiseToJSON } from "../../lib/firebase";
 
-//Server side rendering
-//Zu jeder Zeit wenn diese Seite angefragt wird, wird eine Anfrage an den Server geschickt
+/**
+ * Essentially the Profile of the user (ssr)
+ * @param query  gets the username from the url
+ * @returns props (user, promises) All Promises of the user
+ */
 // export async function getServerSideProps({ query }) {
 //   const { username } = query;
 
@@ -78,6 +86,10 @@ export default function UserProfilePage({ user, promises }) {
     });
   };
 
+  /**
+   * Runs only once and gets the streamer data from the twitch api
+   * Should be in getServerSideProps?
+   */
   useEffect(() => {
     setLoading(true);
 
@@ -101,37 +113,60 @@ export default function UserProfilePage({ user, promises }) {
     //       setLoading(false);
     //     });
     // }
+
     setLoading(false);
   }, [data]);
 
-  if (isLoading) return <p>Loading...</p>;
-  // if (!data || !moreData) return <p>No profile data</p>;
-  if (!data) return <p>No profile data</p>;
+  if (isLoading || !data) return <p>Loading...</p>;
 
   const userData = data.data[0];
-  // const moreUserData = moreData.data[0];
-  //twitch api ende
+
+  let displayName = username;
+  let description = "Dieser User ist nicht auf twitch..";
+
+  if (userData) {
+    displayName = userData.display_name;
+    description = userData.description;
+  }
 
   return (
-    <Layout title={"Profile"}>
-      <Hero title={"Profile"} starter={false} child={undefined} />
-      <UserProfile userImg={userData.profile_image_url} />
-      <main>
-        <div className="mt-16 mb-8 text-center">
-          <p>
-            <i>@{userData.display_name}</i>
-          </p>
-          {/* <h1>{user.displayName || "Anonymous User"}</h1> */}
-          <p className="mt-4">{userData.description}</p>
-          <p className="mt-4">Typ: {userData.broadcaster_type}</p>
-          {/* <p>Sprache: {moreUserData.language}</p> */}
+    <div>
+      <TailwindNavbar />
+      {/* Costumize the header */}
+      <TailwindHeader
+        sectionName="Profil"
+        title={displayName}
+        subtitle={description}
+        button={false}
+      />
+      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-16">
+        <div className="text-center">
+          <h2 className="text-base font-semibold text-indigo-600 tracking-wide uppercase mb-3">
+            Gutscheine
+          </h2>
         </div>
-        <hr />
-        <h1 className="m-8 text-2xl sm:text-4xl text-center">
-          Wähle einen Gutschein aus
-        </h1>
-        <PromiseFeed promises={promises} admin={true} />
-      </main>
-    </Layout>
+        <TailwindGridList />
+      </div>
+      <TailwindFooter />
+    </div>
+    // <Layout title={"Profile"}>
+    //   <Hero title={"Profile"} child={undefined} />
+    //   <UserProfile userImg={userData.profile_image_url} />
+    //   {/* TODO Rewrite UserProfile Component */}
+    //   <main>
+    //     <div className="mt-16 mb-8 text-center">
+    //       <p>
+    //         <i>@{userData.display_name}</i>
+    //       </p>
+    //       <p className="mt-4">{userData.description}</p>
+    //       <p className="mt-4">Typ: {userData.broadcaster_type}</p>
+    //     </div>
+    //     <hr />
+    //     <h1 className="m-8 text-2xl sm:text-4xl text-center">
+    //       Wähle einen Gutschein aus
+    //     </h1>
+    //     <PromiseFeed promises={promises} admin={true} />
+    //   </main>
+    // </Layout>
   );
 }

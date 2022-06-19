@@ -11,9 +11,9 @@ export default function Navbar() {
       <ul>
         <div className="mr-6 mb-2 flex flex-shrink-0 items-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-2xl font-bold text-transparent sm:text-5xl">
           <Link href={"/"}>
-            <span className="hover:cursor-pointer text-xl font-semibold tracking-tight">
+            <h2 className="text-base font-semibold text-indigo-600 tracking-wide uppercase">
               Populend
-            </span>
+            </h2>
           </Link>
         </div>
 
@@ -22,9 +22,9 @@ export default function Navbar() {
           <>
             <div className=" push-left mr-6 mb-2 flex flex-shrink-0 items-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-2xl font-bold text-transparent sm:text-5xl">
               <Link href={"/admin"}>
-                <span className="hover:cursor-pointer text-xl font-semibold tracking-tight">
+                <h2 className="text-base font-semibold text-indigo-600 tracking-wide uppercase">
                   Create Promise
-                </span>
+                </h2>
               </Link>
             </div>
             <li>

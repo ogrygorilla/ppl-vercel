@@ -1,13 +1,17 @@
 import Link from "next/link";
-import PromiseList from "./PromiseList";
 import PromiseCard from "./PromiseCard";
 
+/**
+ * List of multiple Promises
+ * @param {promises, admin} if admin = true : allow edit of promise
+ * @returns
+ */
 export default function PromiseFeed({ promises, admin = false }) {
   return (
     <div className="grid lg:grid-cols-3 sm:grid-cols-2 justify-center">
       {promises
         ? promises.map((promise, idx) => (
-            <div key={idx} className="flex flex-col">
+            <div className="flex flex-col" key={idx}>
               <div className="m-4">
                 <PromiseCard content={promise} disabled={promise == null} />
                 {admin && (

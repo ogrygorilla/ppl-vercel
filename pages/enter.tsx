@@ -1,10 +1,22 @@
-import { auth, firestore, githubAuthProvider } from "../lib/firebase";
-import { UserContext } from "../lib/context";
-
 import { useEffect, useState, useCallback, useContext } from "react";
 import debounce from "lodash.debounce";
-import Layout from "../components/Layout";
 
+import {
+  auth,
+  firestore,
+  githubAuthProvider,
+  googleAuthProvider,
+} from "../lib/firebase";
+import { UserContext } from "../lib/context";
+import TailwindNavbar from "../components/TailwindNavbar";
+import TailwindHeader from "../components/TailwindHeader";
+import "firebase/compat/auth";
+
+/**
+ *
+ * @param props the properties of the page
+ * @returns
+ */
 export default function Enter(props) {
   const { user, username } = useContext(UserContext);
 
@@ -12,9 +24,14 @@ export default function Enter(props) {
   // 2. user signed in, but missing username <UsernameForm />
   // 3. user signed in, has username <SignOutButton />
   return (
-    <Layout title={"Enter"}>
-      <main className="mt-40">
-        {/* <Metatags title="Enter" description="Sign up for this amazing app!" /> */}
+    <div>
+      <TailwindNavbar />
+      <TailwindHeader
+        sectionName="Einstellungen"
+        title="Deine Einstellungen"
+        subtitle="Was möchtest du anpassen?"
+      />
+      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
         {user ? (
           !username ? (
             <UsernameForm />
@@ -22,29 +39,82 @@ export default function Enter(props) {
             <SignOutButton />
           )
         ) : (
-          <SignInButton />
+          <SignInButtons />
         )}
-      </main>
-    </Layout>
+      </div>
+    </div>
+    // <Layout title={"Enter"}>
+    //   <main className="mt-40">
+    //     {/* <Metatags title="Enter" description="Sign up for this amazing app!" /> */}
+    //     {user ? (
+    //       !username ? (
+    //         <UsernameForm />
+    //       ) : (
+    //         <SignOutButton />
+    //       )
+    //     ) : (
+    //       <SignInButton />
+    //     )}
+    //   </main>
+    // </Layout>
   );
 }
 
 // Sign in with Google button
-function SignInButton() {
+function SignInButtons() {
   const signInWithGithub = async () => {
     await auth.signInWithPopup(githubAuthProvider);
   };
 
+  const signInWithGoogle = async () => {
+    await auth.signInWithPopup(googleAuthProvider);
+  };
+
+  const signInWithEmailAndPassword = async () => {
+    await auth.signInWithPopup(googleAuthProvider);
+  };
+
   return (
-    <button className="btn-google" onClick={signInWithGithub}>
-      <img src={"/google.png"} width="30px" /> Sign in with Github
-    </button>
+    <div className="m-auto">
+      <button
+        type="button"
+        className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        onClick={signInWithEmailAndPassword}
+      >
+        Sign in with Google
+      </button>
+      {/* <button
+        type="button"
+        className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        onClick={signInWithGoogle}
+      >
+        Mit Google anmelden
+      </button> */}
+      {/* <button
+        type="button"
+        className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        onClick={signInWithGithub}
+      >
+        Mit Github anmelden
+      </button> */}
+    </div>
   );
 }
 
 // Sign out button
 function SignOutButton() {
-  return <button onClick={() => auth.signOut()}>Sign Out</button>;
+  return (
+    <div className="m-auto">
+      <button
+        type="button"
+        className="m-auto inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        onClick={() => auth.signOut()}
+      >
+        Ausloggen
+      </button>
+    </div>
+  );
+  // return <button onClick={() => auth.signOut()}>Sign Out</button>;
 }
 
 // Username form
@@ -92,8 +162,6 @@ function UsernameForm() {
       setIsValid(false);
     }
   };
-
-  //
 
   useEffect(() => {
     checkUsername(formValue);

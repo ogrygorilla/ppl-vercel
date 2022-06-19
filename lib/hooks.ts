@@ -4,6 +4,10 @@ import {useAuthState} from 'react-firebase-hooks/auth'
 
 import {auth2, firestore } from "./firebase";
 
+/**
+ * 
+ * @returns {user, username} (can be null)
+ */
 export function useUserData(){
     const [user] = useAuthState(auth2);
 
@@ -12,8 +16,6 @@ export function useUserData(){
     useEffect(() => {
       // turn off realtime subscription
       let unsubscribe;
-
-      console.log(user);
   
       if (user) {
         const ref = firestore.collection('users').doc(user.uid);
@@ -31,6 +33,11 @@ export function useUserData(){
   }
 
 
+  /**
+   * Currently not in use
+   * Loads js scripts from a url
+   * @param url 
+   */
   const useScript = url => {
     useEffect(() => {
       const script = document.createElement('script');

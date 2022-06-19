@@ -3,8 +3,11 @@ import {getAuth} from 'firebase/auth'
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/storage';
-import { useDocumentData } from 'react-firebase-hooks/firestore';
 
+/**
+ * Do not check into source control
+ * Should be in a .env file?
+ */
 const firebaseConfig ={
     apiKey: "AIzaSyDBScsxlr-BSh_6StoQ5mA7pomJglHyrOU",
     authDomain: "populend-backend.firebaseapp.com",
@@ -19,9 +22,11 @@ if(!firebase.apps.length){
     firebase.initializeApp(firebaseConfig)
 }
 
+//why 2 auth variables?
 export const auth = firebase.auth();
 export const auth2 = getAuth();
 export const githubAuthProvider = new firebase.auth.GithubAuthProvider();
+export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
 export const firestore = firebase.firestore();
 export const storage = firebase.storage();
