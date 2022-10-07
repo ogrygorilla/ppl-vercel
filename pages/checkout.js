@@ -6,6 +6,7 @@ const stripePromise = loadStripe(
 
 export default function Checkout() {
   const handleClick = async (event) => {
+    console.log("random console log");
     const { sessionId } = await fetch("api/checkout/session", {
       method: "POST",
       headers: {
